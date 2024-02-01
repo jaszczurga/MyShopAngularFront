@@ -114,5 +114,9 @@ export class ProductComponent implements OnInit{
     }
   }
 
+  getShortenedDescription(description: string): string {
+    return description ? description.substring(0, 400)+"..." : '';
+  }
+
 
 }
