@@ -1,20 +1,17 @@
-<div class="row gx-3 gy-4 text-start row-cols-md-3 row-cols-xl-5 row-cols-sm-2 row-cols-1 row-cols-xxl-6">
-
-
+<div class="row gx-2 gy-4 text-start row-cols-md-3 row-cols-xl-5 row-cols-sm-2 row-cols-1 row-cols-xxl-5">
 
   <div  *ngFor="let tempProduct of products"  class="col">
-    <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+    <div class="card"><img class="card-img-top w-100  d-block fit-cover" style="height: 200px" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
       <div class="card-body p-4">
-        <h4 class="card-title">{{tempProduct.id}}</h4>
-        <p class="card-text">Nullam id dolor id nibh ultricies....</p>
+        <h4 class="card-title">{{tempProduct.productName}}</h4>
+        <h6 class="card-text">{{tempProduct.id}}</h6>
+        <p class="card-text">{{tempProduct.productDescription}}</p>
       </div>
     </div>
   </div>
 
-
-  <div *ngIf="products?.length ==0" class="alert alert_warning col-md-12" role="alert">
+  <div *ngIf="products?.length == 0" class="alert alert_warning col-md-12" role="alert">
     No products found
   </div>
-
 
 </div>

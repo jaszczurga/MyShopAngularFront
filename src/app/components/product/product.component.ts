@@ -26,72 +26,92 @@ export class ProductComponent implements OnInit{
                 private route:ActivatedRoute) {
     }
 
-    ngOnInit(): void {
-      this.route.paramMap.subscribe(() => {
-        this.listProducts();});
-    }
 
-  private listProducts() {
-      this.searchMode= this.route.snapshot.paramMap.has('keyword');
-      console.log("searchMode="+this.searchMode);
-      if (this.searchMode){
-        this.handleSearchProducts();
-      }
-      else{
-        this.handleListProducts();
-      }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(() => {
+      this.listProducts();});
   }
 
-  handleListProducts() {
+  protected listProducts() {
+    this.searchMode= this.route.snapshot.paramMap.has('keyword');
+    console.log("searchMode="+this.searchMode);
+    if (this.searchMode){
+      this.handleSearchProducts();
+    }
+    else{
+      this.handleListProducts();
+    }
+    //this.handleListProducts();
+  }
+  handleListProducts(){
     //check if "id" parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
-    if (hasCategoryId) {
+    if (hasCategoryId){
       //get the "id" param string. convert string to a number using the "+" symbol
       //used ! to tell typescript that we know for sure that the id parameter is available
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
-    } else {
+    }
+    else{
       //not category id available ... default to category id 1
       this.currentCategoryId = 1;
     }
 
     //check if we have a different category than previous
-    //Note: Angular will reuse a component if it is currently being viewed
-    //if we have a different category id than previous then set thePageNumber back to 1
-    if (this.previousCategoryId != this.currentCategoryId) {
-      this.thePageNumber = 1;
+    //note: Angular will reuse a component if it is currently being viewed
+    //if we have a different category id than previous, then set thePageNumber back to 1
+
+    if(this.previousCategoryId != this.currentCategoryId){
+      this.thePageNumber=1;
     }
-    this.previousCategoryId = this.currentCategoryId;
+    this.previousCategoryId=1;
     console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
 
-    //get the products for the given category id
-    this.productService.getProductListPaginate(this.thePageNumber - 1,
+
+    //now get the products for the given category id
+    this.productService.getProductListPaginate(
+      this.thePageNumber-1,
       this.thePageSize,
-      this.currentCategoryId).subscribe(this.processResult());
+      this.currentCategoryId)
+      .subscribe(
+        this.processResult()
+      );
   }
 
-  handleSearchProducts() {
+  updatePageSize(pageSize: string) {
+    this.thePageSize= +pageSize;
+    this.thePageNumber=1;
+    this.listProducts();
+  }
+
+
+  private handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    //if we have a different keyword than previous then set thePageNumber to 1
-    if (this.previousKeyword != theKeyword) {
-      this.thePageNumber = 1;
+    //if we have a different keyword than previous
+    //then set thePageNumber to 1
+
+    if(this.previousKeyword != theKeyword){
+      this.thePageNumber=1;
     }
-    this.previousKeyword = theKeyword;
+    this.previousKeyword=theKeyword;
     console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
 
-    //get the products for the given keyword
-    this.productService.searchProductsPaginate(this.thePageNumber - 1,
-      this.thePageSize,
-      theKeyword).subscribe(this.processResult());
+
+    //now search for the products using keyword
+    this.productService.searchProductsPaginate(this.thePageNumber-1,this.thePageSize,theKeyword).subscribe(
+      this.processResult()
+    );
   }
 
+
   private processResult() {
-    return (data:any) => {
-      this.products = data._embedded.products;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
-    };
+    return (data: any) => {
+      this.products=data._embedded.products;
+      //page number starts from 1 in the backend, but in the frontend it starts from 0
+      this.thePageNumber=data.page.number+1;
+      this.thePageSize=data.page.size;
+      this.theTotalElements=data.page.totalElements;
+    }
   }
 
 

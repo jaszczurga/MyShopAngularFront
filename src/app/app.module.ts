@@ -8,14 +8,15 @@ import { ProductCategoryOffCanvaComponent } from './components/product-category-
 import {HttpClientModule} from "@angular/common/http";
 import { ProductComponent } from './components/product/product.component';
 import {RouterModule, Routes} from "@angular/router";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 
 const routes: Routes = [
   {path: 'products', component: ProductComponent},
   {path: 'category', component: ProductComponent},
-  {path: 'products/:id', component: ProductComponent},
-  {path: 'category/:keyword', component: ProductComponent},
+  {path: 'search/:keyword', component: ProductComponent},
+  {path: 'category/:id', component: ProductComponent},
   {path: '', redirectTo: '/products', pathMatch: 'full'},
   {path: '**', redirectTo: '/products', pathMatch: 'full'},
 ];
