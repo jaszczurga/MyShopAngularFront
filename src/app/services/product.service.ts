@@ -2,13 +2,16 @@ import {Injectable, OnInit} from '@angular/core';
 import {map, Observable} from "rxjs";
 import {ProductCategory} from "../common/product-category";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
+import {Product} from "../common/product";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService{
 
-  categoryUrl = 'http://localhost:8080/api/productCategories';
+  categoryUrl = environment.springBootApiUrlhttp + "/productCategories";
+  productUrl = environment.springBootApiUrlhttp + "/products";
 
 
 
@@ -22,11 +25,38 @@ export class ProductService{
     );
   }
 
+  //method to get products by category id from backend for product list page
+  getProductListPaginate(thePage:number,
+                         thePageSize:number,
+                         theCategoryId: number): Observable<GetResponseProducts> {
+
+    //need to build URL based on category id and page size
+    const searchUrl = `${this.productUrl}/search/findByCategoryId?id=${theCategoryId}`
+      + `&page=${thePage}&size=${thePageSize}`;
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
+
+
+
 }
 
 //create interface to unwrap the json from spring data rest _embedded entry
 interface GetResponseProductCategory{
   _embedded: {
     productCategories: ProductCategory[];
+  }
+}
+
+//create interface to unwrap the json from spring data rest _embedded entry
+interface GetResponseProducts{
+  _embedded: {
+    products: Product[];
+  },
+  page: {
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
   }
 }
