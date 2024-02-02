@@ -6,25 +6,28 @@
       <tr>
         <th class="bg-dark-subtle">category_id</th>
         <th class="bg-dark-subtle">category_name</th>
+        <th class="bg-dark-subtle">products_Quantity</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let category of productCategories">
+        <mat-menu #categoryName="matMenu">
+          <button mat-menu-item>Edit Name</button>
+          <button mat-menu-item>Delete Category</button>
+          <button mat-menu-item routerLink="/my-products/{{category.id}}">More</button>
+        </mat-menu>
+        <mat-menu #categoryId="matMenu">
+          <button mat-menu-item>Delete Category</button>
+          <button mat-menu-item routerLink="/my-products/{{category.id}}">More</button>
+        </mat-menu>
         <td><button mat-button [matMenuTriggerFor]="categoryId">{{category.id}}</button></td>
         <td><button mat-button [matMenuTriggerFor]="categoryName">{{category.categoryName}}</button></td>
+        <td><button mat-button [matMenuTriggerFor]="categoryName">todo</button></td>
       </tr>
       <tr></tr>
       </tbody>
     </table>
-    <mat-menu #categoryName="matMenu">
-      <button mat-menu-item>Edit Name</button>
-      <button mat-menu-item>Delete</button>
-      <button mat-menu-item>More</button>
-    </mat-menu>
-    <mat-menu #categoryId="matMenu">
-      <button mat-menu-item>Delete</button>
-      <button mat-menu-item>More</button>
-    </mat-menu>
+
 
   </div>
 </div>

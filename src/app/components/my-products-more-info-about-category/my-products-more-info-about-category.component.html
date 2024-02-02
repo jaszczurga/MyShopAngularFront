@@ -1,0 +1,38 @@
+<div>
+  <div class="container w-75 my-5">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="bg-gradient">
+        <tr>
+          <th class="bg-dark-subtle">Id</th>
+          <th class="bg-dark-subtle">Name</th>
+          <th class="bg-dark-subtle">Description</th>
+          <th class="bg-dark-subtle">Image</th>
+          <th class="bg-dark-subtle">Price</th>
+          <th class="bg-dark-subtle">Stock_Quantity</th>
+          <th class="bg-dark-subtle">Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let tempProduct of products">
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Edit Name</button>
+            <button mat-menu-item>Delete Product</button>
+          </mat-menu>
+          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>
+          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productName}}</button></td>
+          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productDescription}}</button></td>
+          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productImage}}</button></td>
+          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productPrice}}</button></td>
+          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productStockQuantity}}</button></td>
+          <td><button mat-button [matMenuTriggerFor]="menu">todo</button></td>
+        </tr>
+        <tr></tr>
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>

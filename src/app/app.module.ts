@@ -15,6 +15,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButton, MatButtonModule} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
+import { MyProductsMoreInfoAboutCategoryComponent } from './components/my-products-more-info-about-category/my-products-more-info-about-category.component';
 
 
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'search/:keyword', component: ProductComponent},
   {path: 'category/:id', component: ProductComponent},
   {path: 'my-products', component: MyProductsComponent},
+  {path: 'my-products/:id', component: MyProductsMoreInfoAboutCategoryComponent},
   {path: '', redirectTo: '/products', pathMatch: 'full'},
   {path: '**', redirectTo: '/products', pathMatch: 'full'},
 ];
@@ -36,6 +38,7 @@ const routes: Routes = [
     ProductComponent,
     NavBarComponent,
     MyProductsComponent,
+    MyProductsMoreInfoAboutCategoryComponent,
   ],
   imports: [
     MatMenuModule,
