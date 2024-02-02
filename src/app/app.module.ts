@@ -10,6 +10,11 @@ import { ProductComponent } from './components/product/product.component';
 import {RouterModule, Routes} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { MyProductsComponent } from './components/my-products/my-products.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButton, MatButtonModule} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
 
 
 
@@ -19,6 +24,7 @@ const routes: Routes = [
   {path: 'category', component: ProductComponent},
   {path: 'search/:keyword', component: ProductComponent},
   {path: 'category/:id', component: ProductComponent},
+  {path: 'my-products', component: MyProductsComponent},
   {path: '', redirectTo: '/products', pathMatch: 'full'},
   {path: '**', redirectTo: '/products', pathMatch: 'full'},
 ];
@@ -29,15 +35,21 @@ const routes: Routes = [
     ProductCategoryOffCanvaComponent,
     ProductComponent,
     NavBarComponent,
+    MyProductsComponent,
   ],
   imports: [
+    MatMenuModule,
+    MatButtonModule,
     RouterModule.forRoot(routes),
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    [HttpClientModule]
+    [HttpClientModule],
+    MatIcon
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync('noop')
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

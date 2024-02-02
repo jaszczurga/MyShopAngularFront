@@ -1,0 +1,31 @@
+<div>
+<div class="container w-75 my-5">
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="bg-gradient">
+      <tr>
+        <th class="bg-dark-subtle">category_id</th>
+        <th class="bg-dark-subtle">category_name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let category of productCategories">
+        <td><button mat-button [matMenuTriggerFor]="categoryId">{{category.id}}</button></td>
+        <td><button mat-button [matMenuTriggerFor]="categoryName">{{category.categoryName}}</button></td>
+      </tr>
+      <tr></tr>
+      </tbody>
+    </table>
+    <mat-menu #categoryName="matMenu">
+      <button mat-menu-item>Edit Name</button>
+      <button mat-menu-item>Delete</button>
+      <button mat-menu-item>More</button>
+    </mat-menu>
+    <mat-menu #categoryId="matMenu">
+      <button mat-menu-item>Delete</button>
+      <button mat-menu-item>More</button>
+    </mat-menu>
+
+  </div>
+</div>
+</div>
