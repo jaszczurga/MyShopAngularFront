@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {Product} from "../../common/product";
+import {ProductCategory} from "../../common/product-category";
 
 @Component({
   selector: 'app-my-products-more-info-about-category',
@@ -11,6 +12,7 @@ import {Product} from "../../common/product";
 export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
 
   products: Product[] = [];
+  productCategories: ProductCategory[]=[];
   currentCategoryId: number=1;
   previousCategoryId: number=1;
   theTotalElements: number = 0;
@@ -22,12 +24,14 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
 
 
 
+
   constructor(private productService: ProductService,
               private route:ActivatedRoute) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.handleListProducts();});
+    this.listProductCategories();
   }
 
   handleListProducts(){
@@ -72,6 +76,15 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
       this.thePageSize=data.page.size;
       this.theTotalElements=data.page.totalElements;
     }
+  }
+
+  private listProductCategories() {
+    this.productService.getProductCategories().subscribe(
+      data => {
+        console.log('Product Categories=' + JSON.stringify(data));
+        this.productCategories = data;
+      }
+    )
   }
 
 }
