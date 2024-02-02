@@ -9,6 +9,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { ProductComponent } from './components/product/product.component';
 import {RouterModule, Routes} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+
 
 
 
@@ -26,6 +28,7 @@ const routes: Routes = [
     AppComponent,
     ProductCategoryOffCanvaComponent,
     ProductComponent,
+    NavBarComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
