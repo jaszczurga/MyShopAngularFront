@@ -20,7 +20,7 @@
             <button mat-menu-item>Delete Product</button>
           </mat-menu>
           <mat-menu #c="matMenu" >
-            <button mat-menu-item *ngFor="let tempProduct of productCategories">{{tempProduct.categoryName}} of id {{tempProduct.id}}</button>
+            <button mat-menu-item *ngFor="let tempCategory of productCategories" (click)="changeCategoryName(tempProduct,tempProduct.id,tempCategory.id)">{{tempCategory.categoryName}} of id {{tempCategory.id}}</button>
           </mat-menu>
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productName}}</button></td>
@@ -28,7 +28,7 @@
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productImage}}</button></td>
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productPrice}}</button></td>
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productStockQuantity}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="c">todo</button></td>
+          <td><button mat-button [matMenuTriggerFor]="c">{{currentCategoryName}}</button></td>
         </tr>
         <tr></tr>
         </tbody>

@@ -3,6 +3,8 @@ import {ProductService} from "../../services/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {Product} from "../../common/product";
 import {ProductCategory} from "../../common/product-category";
+import {ProductDto} from "../../dto/product-dto";
+import {CategoryDto} from "../../dto/category-dto";
 
 @Component({
   selector: 'app-my-products-more-info-about-category',
@@ -14,8 +16,10 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
   products: Product[] = [];
   productCategories: ProductCategory[]=[];
   currentCategoryId: number=1;
+  currentCategoryName: string='';
   previousCategoryId: number=1;
   theTotalElements: number = 0;
+
 
 
   //pagination
@@ -32,6 +36,7 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     this.route.paramMap.subscribe(() => {
       this.handleListProducts();});
     this.listProductCategories();
+    this.setCurrentCategoryName();
   }
 
   handleListProducts(){
@@ -87,4 +92,37 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     )
   }
 
+  private setCurrentCategoryName() {
+    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+    if (hasCategoryId){
+      //get the "id" param string. convert string to a number using the "+" symbol
+      //used ! to tell typescript that we know for sure that the id parameter is available
+      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+      this.productService.getCategoryNameById(this.currentCategoryId).subscribe(
+        data => {
+          console.log('Product Categories=' + JSON.stringify(data));
+          this.currentCategoryName = data.categoryName;
+        }
+      )
+    }
+    else{
+      //not category id available ... default to category id 1
+      this.currentCategoryId = 1;
+    }
+  }
+
+  changeCategoryName(product: Product, id: number, categoryId: number) {
+
+    //create product dto
+    const productDto = new ProductDto(product.id, product.productName, product.productDescription, product.productPrice, product.productStockQuantity, product.productImage, new CategoryDto(categoryId, ''));
+
+    product.categoryId=categoryId;
+    this.productService.updateProductCategory(productDto,id).subscribe(
+      data => {
+        console.log('Product Categories=' + JSON.stringify(data));
+      }
+    )
+
+
+  }
 }

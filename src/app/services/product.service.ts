@@ -4,6 +4,7 @@ import {ProductCategory} from "../common/product-category";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Product} from "../common/product";
+import {ProductDto} from "../dto/product-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,18 @@ export class ProductService{
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
+  //get category name by id
+  getCategoryNameById(theCategoryId: number): Observable<GetResponseProductCategory> {
+    const searchUrl = `http://localhost:8080/api/productCategories/${theCategoryId}`;
+    return this.httpClient.get<GetResponseProductCategory>(searchUrl);
+  }
+
+  //update products category
+  updateProductCategory(theProduct: ProductDto,id: number): Observable<Product> {
+    console.log('theProduct=' + JSON.stringify(theProduct));
+    return this.httpClient.patch<Product>(`http://localhost:8080/api/action/updateProduct/${id}`, theProduct);
+  }
+
 
 
 }
@@ -58,6 +71,11 @@ interface GetResponseProductCategory{
   _embedded: {
     productCategories: ProductCategory[];
   }
+}
+
+interface GetResponseProductCategory{
+  "id": number,
+  "categoryName": string
 }
 
 //create interface to unwrap the json from spring data rest _embedded entry
