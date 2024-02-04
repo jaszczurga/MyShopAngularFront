@@ -17,7 +17,7 @@ export class ProductComponent implements OnInit{
 
   //pagination
   thePageNumber: number = 1;
-  thePageSize: number = 5;
+  thePageSize: number = 50;
   theTotalElements: number = 0;
 
   previousKeyword: string ="";

@@ -20,10 +20,15 @@ export class ProductService{
 
 
   //method to get product categories from backend for product list page menu
-  getProductCategories():Observable<ProductCategory[]> {
-    return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
-      map(response => response._embedded.productCategories)
-    );
+  getProductCategories():Observable<GetResponseProductCategoryModel> {
+
+    //old version of api
+    // return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
+    //   map(response => response._embedded.productCategories)
+    // );
+    //TODO add pagination to this url not necessary but still
+    return this.httpClient.get<GetResponseProductCategoryModel>("http://localhost:8080/api/action/categories?page=0&size=10");
+
   }
 
   //method to get products by category id from backend for product list page
@@ -104,10 +109,22 @@ interface GetResponseProductCategory{
   }
 }
 
+interface GetResponseProductCategoryModel{
+  content: ProductCategory[];
+  pageable: {
+    pageSize: number,
+    pageNumber: number,
+  },
+  numberOfElements: number,
+}
+
 interface GetResponseProductCategory{
   "id": number,
   "categoryName": string
 }
+
+
+
 
 //create interface to unwrap the json from spring data rest _embedded entry
 interface GetResponseProducts{

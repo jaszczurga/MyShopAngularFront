@@ -1,3 +1,5 @@
+import {ProductCategory} from "./product-category";
+
 export class Product {
   constructor(public id: number,
               public productName: string,
@@ -5,5 +7,5 @@ export class Product {
               public productPrice: number,
               public productStockQuantity: number,
               public productImage: string,
-              public categoryId:number) {}
+              public category:ProductCategory) {}
 }

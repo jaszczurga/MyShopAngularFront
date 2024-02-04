@@ -29,7 +29,7 @@
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productImage}}</button></td>
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productPrice}}</button></td>
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productStockQuantity}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="menu">{{currentCategoryName}}</button></td>
+          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.category.categoryName}}</button></td>
         </tr>
         <tr></tr>
         </tbody>

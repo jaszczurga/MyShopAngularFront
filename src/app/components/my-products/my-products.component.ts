@@ -11,7 +11,7 @@ export class MyProductsComponent implements OnInit{
 
   productCategories: ProductCategory[]=[];
 
-  numberOfProducts: number = 0;
+  //numberOfProducts: number = 0;
 
 
   constructor(private productService: ProductService) {
@@ -19,14 +19,14 @@ export class MyProductsComponent implements OnInit{
 
   ngOnInit(): void {
     this.listProductCategories();
-    this.getNumberOfProductsForCategory(1);
+   // this.getNumberOfProductsForCategory(1);
   }
 
   private listProductCategories() {
     this.productService.getProductCategories().subscribe(
       data => {
         console.log('Product Categories=' + JSON.stringify(data));
-        this.productCategories = data;
+        this.productCategories = data.content;
       }
     )
   }
