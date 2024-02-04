@@ -12,18 +12,18 @@
       </thead>
       <tbody>
       <tr *ngFor="let category of productCategories">
-        <mat-menu #categoryName="matMenu">
-          <button mat-menu-item>Edit Name</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Edit Category</button>
           <button mat-menu-item (click)="deleteCategoryById(category.id)" >Delete Category</button>
-          <button mat-menu-item routerLink="/my-products/{{category.id}}">More</button>
+          <button mat-menu-item routerLink="/my-products/{{category.id}}">Products</button>
         </mat-menu>
-        <mat-menu #categoryId="matMenu">
-          <button mat-menu-item (click)="deleteCategoryById(category.id)" >Delete Category</button>
-          <button mat-menu-item routerLink="/my-products/{{category.id}}">More</button>
-        </mat-menu>
-        <td><button mat-button [matMenuTriggerFor]="categoryId">{{category.id}}</button></td>
-        <td><button mat-button [matMenuTriggerFor]="categoryName">{{category.categoryName}}</button></td>
-        <td><button mat-button [matMenuTriggerFor]="categoryName">{{category.products.length}}</button></td>
+<!--        <mat-menu #categoryId="matMenu">-->
+<!--          <button mat-menu-item (click)="deleteCategoryById(category.id)" >Delete Category</button>-->
+<!--          <button mat-menu-item routerLink="/my-products/{{category.id}}">More</button>-->
+<!--        </mat-menu>-->
+        <td><button mat-button [matMenuTriggerFor]="menu">{{category.id}}</button></td>
+        <td>{{category.categoryName}}</td>
+        <td>{{category.products.length}}</td>
       </tr>
       <tr></tr>
       </tbody>

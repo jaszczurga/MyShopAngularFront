@@ -17,19 +17,19 @@
         <tbody>
         <tr *ngFor="let tempProduct of products">
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>Edit Name</button>
+            <button mat-menu-item>Edit Product</button>
             <button mat-menu-item (click)="deleteProductById(tempProduct.id)" >Delete Product</button>
           </mat-menu>
           <mat-menu #c="matMenu" >
             <button mat-menu-item *ngFor="let tempCategory of productCategories" (click)="changeCategoryName(tempProduct,tempProduct.id,tempCategory.id)">{{tempCategory.categoryName}} of id {{tempCategory.id}}</button>
           </mat-menu>
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productName}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productDescription}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productImage}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productPrice}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.productStockQuantity}}</button></td>
-          <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.category.categoryName}}</button></td>
+          <td>{{tempProduct.productName}}</td>
+          <td>{{tempProduct.productDescription}}</td>
+          <td>{{tempProduct.productImage}}</td>
+          <td>{{tempProduct.productPrice}}</td>
+          <td>{{tempProduct.productStockQuantity}}</td>
+          <td>{{tempProduct.category.categoryName}}</td>
         </tr>
         <tr></tr>
         </tbody>
