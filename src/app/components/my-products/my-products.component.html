@@ -23,7 +23,7 @@
         </mat-menu>
         <td><button mat-button [matMenuTriggerFor]="categoryId">{{category.id}}</button></td>
         <td><button mat-button [matMenuTriggerFor]="categoryName">{{category.categoryName}}</button></td>
-        <td><button mat-button [matMenuTriggerFor]="categoryName">todo</button></td>
+        <td><button mat-button [matMenuTriggerFor]="categoryName">{{getNumberOfProductsForCategory(category.id)}}</button></td>
       </tr>
       <tr></tr>
       </tbody>

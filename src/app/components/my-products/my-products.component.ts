@@ -11,12 +11,15 @@ export class MyProductsComponent implements OnInit{
 
   productCategories: ProductCategory[]=[];
 
+  numberOfProducts: number = 0;
+
 
   constructor(private productService: ProductService) {
   }
 
   ngOnInit(): void {
     this.listProductCategories();
+    this.getNumberOfProductsForCategory(1);
   }
 
   private listProductCategories() {
@@ -37,5 +40,14 @@ export class MyProductsComponent implements OnInit{
       }
     )
 
+  }
+
+  //get number od products for category
+  getNumberOfProductsForCategory(id: number) {
+    this.productService.getNumberOfProductsInCategory(id).subscribe(
+      data => {
+        console.log('Number of products for category=' + JSON.stringify(data));
+      }
+    )
   }
 }

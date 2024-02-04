@@ -29,26 +29,42 @@ export class ProductService{
   //method to get products by category id from backend for product list page
   getProductListPaginate(thePage:number,
                          thePageSize:number,
-                         theCategoryId: number): Observable<GetResponseProducts> {
+                         theCategoryId: number): Observable<GetResponseProductsModel> {
 
     //need to build URL based on category id and page size
-    const searchUrl = `${this.productUrl}/search/findByCategoryId?id=${theCategoryId}`
-      + `&page=${thePage}&size=${thePageSize}`;
+    // const searchUrl = `${this.productUrl}/search/findByCategoryId?id=${theCategoryId}`
+    //   + `&page=${thePage}&size=${thePageSize}`;
 
-    return this.httpClient.get<GetResponseProducts>(searchUrl);
+    //new version of api
+    const searchUrl = `http://localhost:8080/api/action/productsByCategoryId?categoryId=${theCategoryId}&page=${thePage}&size=${thePageSize}`
+
+   // return this.httpClient.get<GetResponseProducts>(searchUrl);
+    //new version of api
+    return this.httpClient.get<GetResponseProductsModel>(searchUrl);
   }
 
   //method to get products by keyword from backend for search component
   searchProductsPaginate(thePage:number,
                          thePageSize:number,
-                         theKeyword: string): Observable<GetResponseProducts> {
+                         theKeyword: string): Observable<GetResponseProductsModel> {
 
     //need to build URL based on keyword  and page size
-    const searchUrl = `${this.productUrl}/search/findByProductNameContaining?name=${theKeyword}`
-      + `&page=${thePage}&size=${thePageSize}`;
+    ///////////////////////////search component old version of api////////////////////////
+    // const searchUrl = `${this.productUrl}/search/findByProductNameContaining?name=${theKeyword}`
+    //   + `&page=${thePage}&size=${thePageSize}`;
 
-    return this.httpClient.get<GetResponseProducts>(searchUrl);
+    ///////////////////////////search component new version of api////////////////////////
+    const searchUrl = `http://localhost:8080/api/action/productsContainingName?name=${theKeyword}&page=${thePage}&size=${thePageSize}`
+
+    //old version of api
+   // return this.httpClient.get<GetResponseProducts>(searchUrl);
+
+      //new version of api
+      return this.httpClient.get<GetResponseProductsModel>(searchUrl);
+
   }
+
+
 
   //get category name by id
   getCategoryNameById(theCategoryId: number): Observable<GetResponseProductCategory> {
@@ -70,6 +86,12 @@ export class ProductService{
   //delete category by id
   deleteCategoryById(id: number): Observable<any> {
     return this.httpClient.delete(`http://localhost:8080/api/action/deleteCategory/${id}`);
+  }
+
+  //get number of products in category
+  getNumberOfProductsInCategory(theCategoryId: number): Observable<number> {
+    const searchUrl = `http://localhost:8080/api/action/numberOfProducts/${theCategoryId}`;
+    return this.httpClient.get<number>(searchUrl);
   }
 
 
@@ -99,3 +121,13 @@ interface GetResponseProducts{
     number: number
   }
 }
+
+interface GetResponseProductsModel{
+  content: Product[];
+  pageable: {
+    pageSize: number,
+    pageNumber: number,
+  },
+  numberOfElements: number,
+}
+

@@ -55,25 +55,21 @@ export class ProductComponent implements OnInit{
       //not category id available ... default to category id 1
       this.currentCategoryId = 1;
     }
-
     //check if we have a different category than previous
     //note: Angular will reuse a component if it is currently being viewed
     //if we have a different category id than previous, then set thePageNumber back to 1
-
     if(this.previousCategoryId != this.currentCategoryId){
       this.thePageNumber=1;
     }
     this.previousCategoryId=1;
     console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
-
-
     //now get the products for the given category id
     this.productService.getProductListPaginate(
       this.thePageNumber-1,
       this.thePageSize,
       this.currentCategoryId)
       .subscribe(
-        this.processResult()
+        this.processResult2()
       );
   }
 
@@ -99,7 +95,7 @@ export class ProductComponent implements OnInit{
 
     //now search for the products using keyword
     this.productService.searchProductsPaginate(this.thePageNumber-1,this.thePageSize,theKeyword).subscribe(
-      this.processResult()
+      this.processResult2()
     );
   }
 
@@ -113,6 +109,17 @@ export class ProductComponent implements OnInit{
       this.theTotalElements=data.page.totalElements;
     }
   }
+
+  private processResult2() {
+    return (data: any) => {
+      this.products=data.content;
+      //page number starts from 1 in the backend, but in the frontend it starts from 0
+      this.thePageNumber=data.pageable.pageNumber+1;
+      this.thePageSize=data.pageable.pageSize;
+      this.theTotalElements=data.numberOfElements;
+    }
+  }
+
 
 
 
