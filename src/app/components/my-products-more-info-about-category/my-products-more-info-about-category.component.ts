@@ -125,4 +125,14 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
 
 
   }
+
+  deleteProductById(id: number) {
+
+    this.productService.deleteProductById(id).subscribe(
+      data => {
+        console.log('Product Categories=' + JSON.stringify(data));
+      }
+    )
+
+  }
 }

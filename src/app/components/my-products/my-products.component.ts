@@ -29,4 +29,13 @@ export class MyProductsComponent implements OnInit{
   }
 
 
+  deleteCategoryById(id: number) {
+    this.productService.deleteCategoryById(id).subscribe(
+      data => {
+        console.log('Product Categories=' + JSON.stringify(data));
+        this.productCategories = data;
+      }
+    )
+
+  }
 }

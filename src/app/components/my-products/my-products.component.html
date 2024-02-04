@@ -1,6 +1,7 @@
 <div>
 <div class="container w-75 my-5">
   <div class="table-responsive">
+    <button class="btn btn-primary">Dodaj kategorię</button>
     <table class="table">
       <thead class="bg-gradient">
       <tr>
@@ -13,11 +14,11 @@
       <tr *ngFor="let category of productCategories">
         <mat-menu #categoryName="matMenu">
           <button mat-menu-item>Edit Name</button>
-          <button mat-menu-item>Delete Category</button>
+          <button mat-menu-item (click)="deleteCategoryById(category.id)" >Delete Category</button>
           <button mat-menu-item routerLink="/my-products/{{category.id}}">More</button>
         </mat-menu>
         <mat-menu #categoryId="matMenu">
-          <button mat-menu-item>Delete Category</button>
+          <button mat-menu-item (click)="deleteCategoryById(category.id)" >Delete Category</button>
           <button mat-menu-item routerLink="/my-products/{{category.id}}">More</button>
         </mat-menu>
         <td><button mat-button [matMenuTriggerFor]="categoryId">{{category.id}}</button></td>

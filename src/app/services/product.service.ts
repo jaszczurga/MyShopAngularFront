@@ -62,6 +62,15 @@ export class ProductService{
     return this.httpClient.patch<Product>(`http://localhost:8080/api/action/updateProduct/${id}`, theProduct);
   }
 
+  //method to delete product by id
+  deleteProductById(id: number): Observable<any> {
+    return this.httpClient.delete(`http://localhost:8080/api/action/deleteProduct/${id}`);
+  }
+
+  //delete category by id
+  deleteCategoryById(id: number): Observable<any> {
+    return this.httpClient.delete(`http://localhost:8080/api/action/deleteCategory/${id}`);
+  }
 
 
 }
