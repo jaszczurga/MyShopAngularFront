@@ -152,6 +152,14 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     )
   }
 
+  updateProduct(product: ProductDto, id: string) {
+    this.productService.updateProduct(product,id).subscribe(
+      data => {
+        console.log('Product Categories=' + JSON.stringify(data));
+      }
+    )
+  }
+
 
 
 product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new CategoryDto(1, "test"));
@@ -179,22 +187,32 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         this.saveProduct(this.product);
       }
     });
-
-
   }
 
-  // openDialogUpdateCategory(CategoryName :string,id: number): void {
-  //   const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
-  //     data: {Categoryname: CategoryName},
-  //   });
-  //   if(this.category.categoryName != ""){
-  //     dialogRef.afterClosed().subscribe(result => {
-  //       console.log(result);
-  //       this.category.categoryName = result;
-  //       console.log(this.category);
-  //       this.updateCategory(this.category, String(id));
-  //     });
-  //   }
-  // }
+  openDialogEditProduct(id:number,product:ProductDto): void {
+    const dialogRef = this.dialog.open(AddProductDialogComponent, {
+      data: {
+        ProductName: product.productName,
+        ProductDescription: product.productDescription,
+        ProductImageUrl: product.productImage,
+        ProductPrice: product.productPrice,
+        ProductStock: product.productStockQuantity,
+        Category: product.category,
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.product.productName = result.ProductName;
+      this.product.productDescription = result.ProductDescription;
+      this.product.productImage = result.ProductImageUrl;
+      this.product.productPrice = result.ProductPrice;
+      this.product.productStockQuantity = result.ProductStock;
+      this.product.category = new ProductCategory(result.Category.id, result.Category.categoryName,[]);
+      console.log(this.product);
+      if(this.product.productName != "" && this.product.productName != null) {
+        this.updateProduct(this.product, String(id));
+      }
+    });
+  }
 
 }

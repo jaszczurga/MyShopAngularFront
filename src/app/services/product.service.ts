@@ -101,6 +101,11 @@ export class ProductService{
     return this.httpClient.post<ProductDto>("http://localhost:8080/api/action/saveProduct", theProduct);
   }
 
+  //method to update product
+  updateProduct(theProduct: ProductDto,id: string): Observable<ProductDto> {
+    return this.httpClient.patch<ProductDto>(`http://localhost:8080/api/action/updateProduct/${id}`, theProduct);
+  }
+
 
 }
 

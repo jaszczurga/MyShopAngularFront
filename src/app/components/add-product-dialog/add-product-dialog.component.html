@@ -4,7 +4,7 @@
   <div class="form-container">
     <div class="form-row">
       <mat-form-field>
-        <mat-label>Product Name</mat-label>
+        <mat-label>Name</mat-label>
         <input matInput [(ngModel)]="data.ProductName">
       </mat-form-field>
     </div>
@@ -16,9 +16,9 @@
     </div>
     <div class="form-row">
       <mat-form-field>
-        <mat-label>Category</mat-label>
+        <mat-label>{{data.Category.categoryName}}</mat-label>
         <mat-select [(ngModel)]="data.Category">
-          <mat-option *ngFor="let category of categories" [value]="category">{{ category.categoryName }}</mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category" >{{ category.categoryName }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
