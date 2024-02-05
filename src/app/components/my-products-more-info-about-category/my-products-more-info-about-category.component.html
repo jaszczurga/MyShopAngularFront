@@ -1,7 +1,7 @@
 <div>
   <div class="container w-75 my-5">
     <div class="table-responsive">
-      <button class="btn btn-primary">Dodaj Produkt</button>
+      <button class="btn btn-primary"  (click)="openDialogAddNewProduct()">Dodaj Produkt</button>
       <table class="table">
         <thead class="bg-gradient">
         <tr>
@@ -17,12 +17,10 @@
         <tbody>
         <tr *ngFor="let tempProduct of products">
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>Edit Product</button>
+            <button mat-menu-item (click)="openDialogAddNewProduct()" >Edit Product</button>
             <button mat-menu-item (click)="deleteProductById(tempProduct.id)" >Delete Product</button>
           </mat-menu>
-          <mat-menu #c="matMenu" >
-            <button mat-menu-item *ngFor="let tempCategory of productCategories" (click)="changeCategoryName(tempProduct,tempProduct.id,tempCategory.id)">{{tempCategory.categoryName}} of id {{tempCategory.id}}</button>
-          </mat-menu>
+
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>
           <td>{{tempProduct.productName}}</td>
           <td>{{tempProduct.productDescription}}</td>

@@ -22,6 +22,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { AddCategoryDialogComponent } from './components/add-category-dialog/add-category-dialog.component';
 import {FormsModule} from "@angular/forms";
+import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
+import {MatOption, MatSelect} from "@angular/material/select";
 
 
 
@@ -48,6 +50,7 @@ const routes: Routes = [
     MyProductsMoreInfoAboutCategoryComponent,
     ProductContentDetailsComponent,
     AddCategoryDialogComponent,
+    AddProductDialogComponent,
   ],
   imports: [
     MatDialogModule,
@@ -61,7 +64,9 @@ const routes: Routes = [
     NgbModule,
     [HttpClientModule],
     MatIcon,
-    FormsModule
+    FormsModule,
+    MatSelect,
+    MatOption
   ],
   providers: [
     provideAnimationsAsync('noop')

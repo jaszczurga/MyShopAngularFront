@@ -1,0 +1,48 @@
+<mat-dialog-content>
+  <p>Add new Category</p>
+
+  <div class="form-container">
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Product Name</mat-label>
+        <input matInput [(ngModel)]="data.ProductName">
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Product Description</mat-label>
+        <input matInput [(ngModel)]="data.ProductDescription">
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="data.Category">
+          <mat-option *ngFor="let category of categories" [value]="category">{{ category.categoryName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Product Image Url</mat-label>
+        <input matInput [(ngModel)]="data.ProductImageUrl">
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Product Price</mat-label>
+        <input matInput [(ngModel)]="data.ProductPrice">
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Product Stock</mat-label>
+        <input matInput [(ngModel)]="data.ProductStock">
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">close</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>save</button>
+</mat-dialog-actions>

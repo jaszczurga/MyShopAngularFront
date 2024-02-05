@@ -5,6 +5,9 @@ import {Product} from "../../common/product";
 import {ProductCategory} from "../../common/product-category";
 import {ProductDto} from "../../dto/product-dto";
 import {CategoryDto} from "../../dto/category-dto";
+import {AddCategoryDialogComponent} from "../add-category-dialog/add-category-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {AddProductDialogComponent} from "../add-product-dialog/add-product-dialog.component";
 
 @Component({
   selector: 'app-my-products-more-info-about-category',
@@ -24,13 +27,14 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
 
   //pagination
   thePageNumber: number = 1;
-  thePageSize: number = 5;
+  thePageSize: number = 50;
 
 
 
 
   constructor(private productService: ProductService,
-              private route:ActivatedRoute) {
+              private route:ActivatedRoute,
+              public dialog: MatDialog) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -139,4 +143,58 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     )
 
   }
+
+  saveProduct(product: ProductDto) {
+    this.productService.saveProduct(product).subscribe(
+      data => {
+        console.log('Product Categories=' + JSON.stringify(data));
+      }
+    )
+  }
+
+
+
+product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new CategoryDto(1, "test"));
+  openDialogAddNewProduct(): void {
+    const dialogRef = this.dialog.open(AddProductDialogComponent, {
+      data: {
+        ProductName: "",
+        ProductDescription: "",
+        ProductImageUrl: "",
+        ProductPrice: "",
+        ProductStock: "",
+        Category: this.product.category,
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.product.productName = result.ProductName;
+      this.product.productDescription = result.ProductDescription;
+      this.product.productImage = result.ProductImageUrl;
+      this.product.productPrice = result.ProductPrice;
+      this.product.productStockQuantity = result.ProductStock;
+      this.product.category = new ProductCategory(result.Category.id, result.Category.categoryName,[]);
+      console.log(this.product);
+      if(this.product.productName != "" && this.product.productName != null) {
+        this.saveProduct(this.product);
+      }
+    });
+
+
+  }
+
+  // openDialogUpdateCategory(CategoryName :string,id: number): void {
+  //   const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
+  //     data: {Categoryname: CategoryName},
+  //   });
+  //   if(this.category.categoryName != ""){
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       console.log(result);
+  //       this.category.categoryName = result;
+  //       console.log(this.category);
+  //       this.updateCategory(this.category, String(id));
+  //     });
+  //   }
+  // }
+
 }
