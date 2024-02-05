@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Product} from "../common/product";
 import {ProductDto} from "../dto/product-dto";
+import {CategoryDto} from "../dto/category-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -15,60 +16,40 @@ export class ProductService{
   productUrl = environment.springBootApiUrlhttp + "/products";
 
 
-
-  constructor(private httpClient: HttpClient) { }
+  constructor( private httpClient: HttpClient ) {
+  }
 
 
   //method to get product categories from backend for product list page menu
-  getProductCategories():Observable<GetResponseProductCategoryModel> {
+  getProductCategories(): Observable<GetResponseProductCategoryModel> {
 
-    //old version of api
-    // return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
-    //   map(response => response._embedded.productCategories)
-    // );
+
     //TODO add pagination to this url not necessary but still
     return this.httpClient.get<GetResponseProductCategoryModel>("http://localhost:8080/api/action/categories?page=0&size=10");
 
   }
 
-  //method to get products by category id from backend for product list page
-  getProductListPaginate(thePage:number,
-                         thePageSize:number,
-                         theCategoryId: number): Observable<GetResponseProductsModel> {
-
-    //need to build URL based on category id and page size
-    // const searchUrl = `${this.productUrl}/search/findByCategoryId?id=${theCategoryId}`
-    //   + `&page=${thePage}&size=${thePageSize}`;
+  getProductListPaginate( thePage: number,
+                          thePageSize: number,
+                          theCategoryId: number ): Observable<GetResponseProductsModel> {
 
     //new version of api
     const searchUrl = `http://localhost:8080/api/action/productsByCategoryId?categoryId=${theCategoryId}&page=${thePage}&size=${thePageSize}`
 
-   // return this.httpClient.get<GetResponseProducts>(searchUrl);
     //new version of api
     return this.httpClient.get<GetResponseProductsModel>(searchUrl);
   }
 
   //method to get products by keyword from backend for search component
-  searchProductsPaginate(thePage:number,
-                         thePageSize:number,
-                         theKeyword: string): Observable<GetResponseProductsModel> {
-
-    //need to build URL based on keyword  and page size
-    ///////////////////////////search component old version of api////////////////////////
-    // const searchUrl = `${this.productUrl}/search/findByProductNameContaining?name=${theKeyword}`
-    //   + `&page=${thePage}&size=${thePageSize}`;
-
+  searchProductsPaginate( thePage: number,
+                          thePageSize: number,
+                          theKeyword: string ): Observable<GetResponseProductsModel> {
     ///////////////////////////search component new version of api////////////////////////
     const searchUrl = `http://localhost:8080/api/action/productsContainingName?name=${theKeyword}&page=${thePage}&size=${thePageSize}`
-
-    //old version of api
-   // return this.httpClient.get<GetResponseProducts>(searchUrl);
-
-      //new version of api
-      return this.httpClient.get<GetResponseProductsModel>(searchUrl);
+    //new version of api
+    return this.httpClient.get<GetResponseProductsModel>(searchUrl);
 
   }
-
 
 
   //get category name by id
@@ -104,6 +85,18 @@ export class ProductService{
     const searchUrl = `http://localhost:8080/api/action/product/${id}`;
     return this.httpClient.get<Product>(searchUrl);
   }
+
+  //save new category to db
+  saveCategory(theCategory: CategoryDto): Observable<CategoryDto> {
+    return this.httpClient.post<CategoryDto>("http://localhost:8080/api/action/saveCategory", theCategory);
+  }
+
+  //update existing category name in db
+  updateCategory(theCategory: CategoryDto,id:string): Observable<CategoryDto> {
+    return this.httpClient.patch<CategoryDto>(`http://localhost:8080/api/action/updateCategory/${id}`, theCategory);
+  }
+
+
 }
 
 //create interface to unwrap the json from spring data rest _embedded entry
@@ -128,21 +121,6 @@ interface GetResponseProductCategory{
 }
 
 
-
-
-//create interface to unwrap the json from spring data rest _embedded entry
-interface GetResponseProducts{
-  _embedded: {
-    products: Product[];
-  },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
-  }
-}
-
 interface GetResponseProductsModel{
   content: Product[];
   pageable: {
@@ -152,13 +130,5 @@ interface GetResponseProductsModel{
   numberOfElements: number,
 }
 
-interface GetResponseProduct{
-  "id": number,
-  "productName": string,
-  "productDescription": string,
-  "productPrice": number,
-  "productStockQuantity": number,
-  "productImage": string,
-  "category": ProductCategory
-}
+
 

@@ -1,7 +1,7 @@
 <div>
 <div class="container w-75 my-5">
   <div class="table-responsive">
-    <button class="btn btn-primary">Dodaj kategorię</button>
+    <button class="btn btn-primary"  mat-raised-button (click)="openDialogAddNewCategory()">Dodaj kategorię</button>
     <table class="table">
       <thead class="bg-gradient">
       <tr>
@@ -13,9 +13,9 @@
       <tbody>
       <tr *ngFor="let category of productCategories">
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Edit Category</button>
-          <button mat-menu-item (click)="deleteCategoryById(category.id)" >Delete Category</button>
-          <button mat-menu-item routerLink="/my-products/{{category.id}}">Products</button>
+          <button mat-menu-item  (click)="openDialogUpdateCategory(category.categoryName,category.id)" style="background-color: cadetblue">Edit Category</button>
+          <button mat-menu-item (click)="deleteCategoryById(category.id)" style="background-color: orangered">Delete Category</button>
+          <button mat-menu-item routerLink="/my-products/{{category.id}}" style="background-color: cornflowerblue">Products</button>
         </mat-menu>
 <!--        <mat-menu #categoryId="matMenu">-->
 <!--          <button mat-menu-item (click)="deleteCategoryById(category.id)" >Delete Category</button>-->
@@ -32,4 +32,6 @@
 
   </div>
 </div>
+
+
 </div>

@@ -17,6 +17,11 @@ import {MatButton, MatButtonModule} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import { MyProductsMoreInfoAboutCategoryComponent } from './components/my-products-more-info-about-category/my-products-more-info-about-category.component';
 import { ProductContentDetailsComponent } from './components/product-content-details/product-content-details.component';
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import { AddCategoryDialogComponent } from './components/add-category-dialog/add-category-dialog.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -42,8 +47,12 @@ const routes: Routes = [
     MyProductsComponent,
     MyProductsMoreInfoAboutCategoryComponent,
     ProductContentDetailsComponent,
+    AddCategoryDialogComponent,
   ],
   imports: [
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatMenuModule,
     MatButtonModule,
     RouterModule.forRoot(routes),
@@ -51,7 +60,8 @@ const routes: Routes = [
     AppRoutingModule,
     NgbModule,
     [HttpClientModule],
-    MatIcon
+    MatIcon,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync('noop')
