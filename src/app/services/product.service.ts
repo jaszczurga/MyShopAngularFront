@@ -99,7 +99,11 @@ export class ProductService{
     return this.httpClient.get<number>(searchUrl);
   }
 
-
+  //get product by id
+  getProductById(id: string): Observable<Product> {
+    const searchUrl = `http://localhost:8080/api/action/product/${id}`;
+    return this.httpClient.get<Product>(searchUrl);
+  }
 }
 
 //create interface to unwrap the json from spring data rest _embedded entry
@@ -146,5 +150,15 @@ interface GetResponseProductsModel{
     pageNumber: number,
   },
   numberOfElements: number,
+}
+
+interface GetResponseProduct{
+  "id": number,
+  "productName": string,
+  "productDescription": string,
+  "productPrice": number,
+  "productStockQuantity": number,
+  "productImage": string,
+  "category": ProductCategory
 }
 

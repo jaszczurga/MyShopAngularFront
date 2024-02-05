@@ -16,12 +16,14 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatButton, MatButtonModule} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import { MyProductsMoreInfoAboutCategoryComponent } from './components/my-products-more-info-about-category/my-products-more-info-about-category.component';
+import { ProductContentDetailsComponent } from './components/product-content-details/product-content-details.component';
 
 
 
 
 const routes: Routes = [
   {path: 'products', component: ProductComponent},
+  {path: 'products/:id', component: ProductContentDetailsComponent},
   {path: 'category', component: ProductComponent},
   {path: 'search/:keyword', component: ProductComponent},
   {path: 'category/:id', component: ProductComponent},
@@ -39,6 +41,7 @@ const routes: Routes = [
     NavBarComponent,
     MyProductsComponent,
     MyProductsMoreInfoAboutCategoryComponent,
+    ProductContentDetailsComponent,
   ],
   imports: [
     MatMenuModule,
