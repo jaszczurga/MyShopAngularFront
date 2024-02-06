@@ -19,7 +19,8 @@ export class ProductService{
   ListOfRecentProducts: Subject<Product[]> = new BehaviorSubject<Product[]>([]);
   ListOfRecentCategories: Subject<ProductCategory[]> = new BehaviorSubject<ProductCategory[]>([]);
 
-
+  constructor( private httpClient: HttpClient ) {
+  }
 
   //method to refresh acutal list of the recent products
   refreshListOfRecentProducts(thePage: number,
@@ -43,8 +44,7 @@ export class ProductService{
     });
   }
 
-  constructor( private httpClient: HttpClient ) {
-  }
+
 
 
   //method to get product categories from backend for product list page menu
@@ -134,6 +134,8 @@ export class ProductService{
   updateProduct(theProduct: ProductDto,id: string): Observable<ProductDto> {
     return this.httpClient.patch<ProductDto>(  this.actionApiUrl +`/updateProduct/${id}`, theProduct);
   }
+
+
 
 
 }
