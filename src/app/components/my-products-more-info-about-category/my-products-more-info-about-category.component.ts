@@ -25,7 +25,7 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
 
 
   //pagination
-  thePageNumber: number = 1;
+  thePageNumber: number = 0;
   thePageSize: number = 50;
 
 
@@ -37,15 +37,36 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
-      this.handleListProducts();});
-    this.subscribeToProducts();
+      this.subscribeToProducts();
+    });
+
     //this.listProductCategories();
    // this.setCurrentCategoryName();
   }
 
   //get recent list of products from service
   subscribeToProducts() {
-    this.productService.refreshListOfRecentProducts(0,50,79);
+
+    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+    if (hasCategoryId){
+      //get the "id" param string. convert string to a number using the "+" symbol
+      //used ! to tell typescript that we know for sure that the id parameter is available
+      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+    }
+    else{
+      //not category id available ... default to category id 1
+      this.currentCategoryId = 1;
+    }
+    //check if we have a different category than previous
+    //note: Angular will reuse a component if it is currently being viewed
+    //if we have a different category id than previous, then set thePageNumber back to 1
+    if(this.previousCategoryId != this.currentCategoryId){
+      this.thePageNumber=1;
+    }
+    this.previousCategoryId=1;
+
+    console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
+    this.productService.refreshListOfRecentProducts(0,50,this.currentCategoryId);
     this.productService.ListOfRecentProducts.subscribe(
       data => {
         this.products = data;
