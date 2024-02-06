@@ -24,6 +24,7 @@ import { AddCategoryDialogComponent } from './components/add-category-dialog/add
 import {FormsModule} from "@angular/forms";
 import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
 import {MatOption, MatSelect} from "@angular/material/select";
+import { ImageManagerComponent } from './components/image-manager/image-manager.component';
 
 
 
@@ -51,6 +52,7 @@ const routes: Routes = [
     ProductContentDetailsComponent,
     AddCategoryDialogComponent,
     AddProductDialogComponent,
+    ImageManagerComponent,
   ],
   imports: [
     MatDialogModule,
