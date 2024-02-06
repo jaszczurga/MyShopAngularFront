@@ -25,6 +25,17 @@ export class MyProductsComponent implements OnInit{
    // this.getNumberOfProductsForCategory(1);
   }
 
+  //get recent list of products from service
+  subscribeToCategories() {
+    this.productService.refreshListOfRecentCategories();
+    this.productService.ListOfRecentCategories.subscribe(
+      data => {
+        this.productCategories = data;
+      }
+    )
+  }
+
+
   private listProductCategories() {
     this.productService.getProductCategories().subscribe(
       data => {
@@ -39,26 +50,19 @@ export class MyProductsComponent implements OnInit{
     this.productService.deleteCategoryById(id).subscribe(
       data => {
         console.log('Product Categories=' + JSON.stringify(data));
-        this.productCategories = data;
+        this.subscribeToCategories();
       }
     )
 
   }
 
-  //get number od products for category
-  getNumberOfProductsForCategory(id: number) {
-    this.productService.getNumberOfProductsInCategory(id).subscribe(
-      data => {
-        console.log('Number of products for category=' + JSON.stringify(data));
-      }
-    )
-  }
 
   //save category
   saveCategory(theCategory : CategoryDto) {
     this.productService.saveCategory(theCategory).subscribe(
       data => {
         console.log('Product Categories=' + JSON.stringify(data));
+        this.subscribeToCategories();
       }
     )
   }
@@ -67,6 +71,7 @@ export class MyProductsComponent implements OnInit{
     this.productService.updateCategory(theCategory,id).subscribe(
       data => {
         console.log('Product Categories=' + JSON.stringify(data));
+        this.subscribeToCategories();
       }
     )
   }

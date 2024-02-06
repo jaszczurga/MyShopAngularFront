@@ -17,6 +17,7 @@ export class ProductService{
   actionApiUrl = environment.springBootApiUrlhttp + "/action";
 
   ListOfRecentProducts: Subject<Product[]> = new BehaviorSubject<Product[]>([]);
+  ListOfRecentCategories: Subject<ProductCategory[]> = new BehaviorSubject<ProductCategory[]>([]);
 
 
 
@@ -28,6 +29,17 @@ export class ProductService{
 
     receivedProductsDtoModel.subscribe(data => {
       this.ListOfRecentProducts.next(data.content);
+      console.log('ListOfRecentProducts=' + JSON.stringify(data.content));
+    });
+  }
+
+  //method to refresh actual list of the recent categories
+  refreshListOfRecentCategories() {
+    let receivedCategoriesDtoModel = this.getProductCategories();
+
+    receivedCategoriesDtoModel.subscribe(data => {
+      this.ListOfRecentCategories.next(data.content);
+      console.log('ListOfRecentCategories=' + JSON.stringify(data.content));
     });
   }
 
@@ -81,7 +93,9 @@ export class ProductService{
 
   //method to delete product by id
   deleteProductById(id: number): Observable<any> {
-    return this.httpClient.delete(  this.actionApiUrl +`/deleteProduct/${id}`);
+    let response = this.httpClient.delete(  this.actionApiUrl +`/deleteProduct/${id}`);
+
+    return response;
   }
 
   //delete category by id

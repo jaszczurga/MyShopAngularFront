@@ -19,7 +19,6 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
   products: Product[] = [];
   productCategories: ProductCategory[]=[];
   currentCategoryId: number=1;
-  currentCategoryName: string='';
   previousCategoryId: number=1;
   theTotalElements: number = 0;
 
@@ -39,9 +38,24 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.handleListProducts();});
-    this.listProductCategories();
+    this.subscribeToProducts();
+    //this.listProductCategories();
    // this.setCurrentCategoryName();
   }
+
+  //get recent list of products from service
+  subscribeToProducts() {
+    this.productService.refreshListOfRecentProducts(0,50,79);
+    this.productService.ListOfRecentProducts.subscribe(
+      data => {
+        this.products = data;
+      }
+    )
+  }
+
+
+
+
 
   handleListProducts(){
     //check if "id" parameter is available
@@ -69,11 +83,11 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
       this.thePageSize,
       this.currentCategoryId)
       .subscribe(
-        this.processResult2()
+        this.processResult()
       );
   }
 
-  private processResult2() {
+  private processResult() {
     return (data: any) => {
       this.products=data.content;
       //page number starts from 1 in the backend, but in the frontend it starts from 0
@@ -83,71 +97,23 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     }
   }
 
-  private processResult() {
-    return (data: any) => {
-      this.products=data._embedded.products;
-      //page number starts from 1 in the backend, but in the frontend it starts from 0
-      this.thePageNumber=data.page.number+1;
-      this.thePageSize=data.page.size;
-      this.theTotalElements=data.page.totalElements;
-    }
-  }
 
-  private listProductCategories() {
-    this.productService.getProductCategories().subscribe(
-      data => {
-        console.log('Product Categories=' + JSON.stringify(data));
-        this.productCategories = data.content;
-      }
-    )
-  }
-
-  // private setCurrentCategoryName() {
-  //   const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
-  //   if (hasCategoryId){
-  //     //get the "id" param string. convert string to a number using the "+" symbol
-  //     //used ! to tell typescript that we know for sure that the id parameter is available
-  //     this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
-  //     this.productService.getCategoryNameById(this.currentCategoryId).subscribe(
-  //       data => {
-  //         console.log('Product Categories=' + JSON.stringify(data));
-  //         this.currentCategoryName = data.categoryName;
-  //       }
-  //     )
-  //   }
-  //   else{
-  //     //not category id available ... default to category id 1
-  //     this.currentCategoryId = 1;
-  //   }
-  // }
-
-  changeCategoryName(product: Product, id: number, categoryId: number) {
-
-    //create product dto
-    const productDto = new ProductDto(product.id, product.productName, product.productDescription, product.productPrice, product.productStockQuantity, product.productImage, new CategoryDto(categoryId, ''));
-
-    //product.categoryId=categoryId;
-    this.productService.updateProductCategory(productDto,id).subscribe(
-      data => {
-        console.log('Product Categories=' + JSON.stringify(data));
-      }
-    )
-  }
 
   deleteProductById(id: number) {
 
     this.productService.deleteProductById(id).subscribe(
       data => {
-        console.log('Product Categories=' + JSON.stringify(data));
+        //console.log(data);
+        this.subscribeToProducts()
       }
     )
-
   }
 
   saveProduct(product: ProductDto) {
     this.productService.saveProduct(product).subscribe(
       data => {
-        console.log('Product Categories=' + JSON.stringify(data));
+        console.log("produkt zapisany");
+        this.subscribeToProducts()
       }
     )
   }
@@ -156,13 +122,14 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     this.productService.updateProduct(product,id).subscribe(
       data => {
         console.log('Product Categories=' + JSON.stringify(data));
+        this.subscribeToProducts()
       }
     )
   }
 
 
 
-product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new CategoryDto(1, "test"));
+product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new CategoryDto(1, "choose category"));
   openDialogAddNewProduct(): void {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       data: {
