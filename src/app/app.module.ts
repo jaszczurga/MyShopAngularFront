@@ -30,6 +30,7 @@ import { ImageManagerComponent } from './components/image-manager/image-manager.
 
 
 const routes: Routes = [
+  {path: 'image-manager', component: ImageManagerComponent},
   {path: 'products', component: ProductComponent},
   {path: 'products/:id', component: ProductContentDetailsComponent},
   {path: 'category', component: ProductComponent},

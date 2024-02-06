@@ -24,7 +24,7 @@
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>
           <td>{{tempProduct.productName}}</td>
           <td>{{tempProduct.productDescription}}</td>
-          <td>{{tempProduct.productImage}}</td>
+          <td><button routerLink="/image-manager" >{{tempProduct.productImage}}</button></td>
           <td>{{tempProduct.productPrice}}</td>
           <td>{{tempProduct.productStockQuantity}}</td>
           <td>{{tempProduct.category.categoryName}}</td>

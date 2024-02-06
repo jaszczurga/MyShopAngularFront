@@ -16,7 +16,7 @@ export class ImageService {
   base64Data: any;
   retrieveResonse: any;
   message!: string;
-  imageName: any;
+  imageName='h.jpeg';
 
   //Gets called when the user selects an image
   public onFileChanged(event:any) {
@@ -45,6 +45,7 @@ export class ImageService {
   //Gets called when the user clicks on retieve image button to get the image from back end
   getImage() {
     //Make a call to Sprinf Boot to get the Image Bytes.
+    console.log(this.imageName);
     this.httpClient.get( this.actionApiUrl+'/get/' + this.imageName)
       .subscribe(
         res => {
