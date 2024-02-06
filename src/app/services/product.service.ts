@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {ProductCategory} from "../common/product-category";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
@@ -16,6 +16,20 @@ export class ProductService{
   productUrl = environment.springBootApiUrlhttp + "/products";
   actionApiUrl = environment.springBootApiUrlhttp + "/action";
 
+  ListOfRecentProducts: Subject<Product[]> = new BehaviorSubject<Product[]>([]);
+
+
+
+  //method to refresh acutal list of the recent products
+  refreshListOfRecentProducts(thePage: number,
+                              thePageSize: number,
+                              theCategoryId: number) {
+    let receivedProductsDtoModel = this.getProductListPaginate(thePage, thePageSize, theCategoryId);
+
+    receivedProductsDtoModel.subscribe(data => {
+      this.ListOfRecentProducts.next(data.content);
+    });
+  }
 
   constructor( private httpClient: HttpClient ) {
   }

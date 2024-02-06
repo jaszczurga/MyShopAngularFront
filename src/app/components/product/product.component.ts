@@ -69,7 +69,7 @@ export class ProductComponent implements OnInit{
       this.thePageSize,
       this.currentCategoryId)
       .subscribe(
-        this.processResult2()
+        this.processResult()
       );
   }
 
@@ -95,22 +95,12 @@ export class ProductComponent implements OnInit{
 
     //now search for the products using keyword
     this.productService.searchProductsPaginate(this.thePageNumber-1,this.thePageSize,theKeyword).subscribe(
-      this.processResult2()
+      this.processResult()
     );
   }
 
 
   private processResult() {
-    return (data: any) => {
-      this.products=data._embedded.products;
-      //page number starts from 1 in the backend, but in the frontend it starts from 0
-      this.thePageNumber=data.page.number+1;
-      this.thePageSize=data.page.size;
-      this.theTotalElements=data.page.totalElements;
-    }
-  }
-
-  private processResult2() {
     return (data: any) => {
       this.products=data.content;
       //page number starts from 1 in the backend, but in the frontend it starts from 0
