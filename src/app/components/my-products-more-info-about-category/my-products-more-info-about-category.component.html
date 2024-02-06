@@ -17,8 +17,8 @@
         <tbody>
         <tr *ngFor="let tempProduct of products">
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openDialogEditProduct(tempProduct.id,tempProduct)" >Edit Product</button>
-            <button mat-menu-item (click)="deleteProductById(tempProduct.id)" >Delete Product</button>
+            <button mat-menu-item (click)="openDialogEditProduct(tempProduct.id,tempProduct)" style="background-color: cadetblue">Edit Product</button>
+            <button mat-menu-item (click)="deleteProductById(tempProduct.id)" style="background-color: orangered">Delete Product</button>
           </mat-menu>
 
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>

@@ -19,5 +19,5 @@ export class AddCategoryDialogComponent {
 }
 
 export interface DialogData {
-  Categoryname: string;
+  categoryName: string;
 }

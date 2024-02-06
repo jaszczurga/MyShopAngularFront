@@ -80,7 +80,7 @@ export class MyProductsComponent implements OnInit{
   category: CategoryDto = new CategoryDto(1, "test");
   openDialogAddNewCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
-      data: {Categoryname: ""},
+      data: {categoryName: ""},
     });
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
@@ -94,19 +94,22 @@ export class MyProductsComponent implements OnInit{
 
   }
 
-  openDialogUpdateCategory(CategoryName :string,id: number): void {
+  openDialogUpdateCategory(categoryName :string,id: number): void {
     const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
-      data: {Categoryname: CategoryName},
+      data: {categoryName: categoryName},
     });
-    if(this.category.categoryName != ""){
+
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
         this.category.categoryName = result;
         console.log(this.category);
-        this.updateCategory(this.category, String(id));
+
+        if(this.category.categoryName != "" && this.category.categoryName != null) {
+            this.updateCategory(this.category, String(id));
+        }
       });
     }
-  }
+
 
 
 }

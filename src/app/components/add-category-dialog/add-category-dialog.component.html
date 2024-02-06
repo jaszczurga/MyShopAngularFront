@@ -1,12 +1,12 @@
 
 <mat-dialog-content>
-  <p>Add new Category</p>
+  <p>Category</p>
   <mat-form-field>
-    <mat-label>{{data.Categoryname}}</mat-label>
-    <input matInput [(ngModel)]="data.Categoryname">
+    <mat-label>{{data.categoryName}}</mat-label>
+    <input matInput [(ngModel)]="data.categoryName">
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">close</button>
-  <button mat-button [mat-dialog-close]="data.Categoryname" cdkFocusInitial>save</button>
+  <button mat-button [mat-dialog-close]="data.categoryName" cdkFocusInitial>save</button>
 </mat-dialog-actions>
