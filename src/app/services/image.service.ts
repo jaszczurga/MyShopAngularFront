@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,50 +12,47 @@ export class ImageService {
 
   actionApiUrl = environment.springBootApiUrlhttp + "/action";
 
-  selectedFile!: File;
-  retrievedImage: any;
-  base64Data: any;
-  retrieveResonse: any;
-  message!: string;
-  imageName='h.jpeg';
+  selectedFile$: BehaviorSubject<File> = new BehaviorSubject<File>(new File([], ''));
+  retrievedImage$: BehaviorSubject<any | null> = new BehaviorSubject<any | null>(null);
+  base64Data$: BehaviorSubject<any | null> = new BehaviorSubject<any | null>(null);
+  retrieveResonse$: BehaviorSubject<any> = new BehaviorSubject<string>("");
+  message$: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
   //Gets called when the user selects an image
-  public onFileChanged(event:any) {
+  onFileChanged(event: any) {
     //Select File
-    this.selectedFile = event.target.files[0];
+    this.selectedFile$.next(event.target.files[0]);
   }
   //Gets called when the user clicks on submit to upload the image
   onUpload() {
-    console.log(this.selectedFile);
+    console.log(this.selectedFile$.value);
 
-    //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
     const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    uploadImageData.append('imageFile', this.selectedFile$.value, this.selectedFile$.value?.name || '');
 
-    //Make a call to the Spring Boot Application to save the image
-    this.httpClient.post( this.actionApiUrl+'/upload', uploadImageData, { observe: 'response' })
-      .subscribe((response) => {
+    this.httpClient.post(this.actionApiUrl + '/upload', uploadImageData, { observe: 'response' })
+      .subscribe(
+        (response) => {
           if (response.status === 200) {
-            this.message = 'Image uploaded successfully';
+            this.message$.next('Image uploaded successfully');
           } else {
-            this.message = 'Image not uploaded successfully';
+            this.message$.next('Image not uploaded successfully');
           }
         }
       );
   }
-  //Gets called when the user clicks on retieve image button to get the image from back end
-  getImage() {
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    console.log(this.imageName);
-    this.httpClient.get( this.actionApiUrl+'/get/' + this.imageName)
+
+  //Gets called when the user clicks on retrieve image button to get the image from backend
+  getImage(fileName: string) {
+    console.log(fileName);
+    this.httpClient.get(this.actionApiUrl + '/get/' + fileName)
       .subscribe(
         res => {
-          this.retrieveResonse = res;
-          this.base64Data = this.retrieveResonse.picByte;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+          this.retrieveResonse$.next(res);
+          this.base64Data$.next(this.retrieveResonse$.value.picByte);
+          this.retrievedImage$.next('data:image/jpeg;base64,' + this.base64Data$.value);
         }
       );
   }
-
 
 }

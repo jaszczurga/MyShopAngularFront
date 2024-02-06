@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ImageService} from "../../services/image.service";
 import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-image-manager',
@@ -9,58 +8,78 @@ import {HttpClient} from "@angular/common/http";
   styleUrl: './image-manager.component.css'
 })
 export class ImageManagerComponent implements OnInit{
-
-  ngOnInit() {
-  }
-
-  constructor(private httpClient: HttpClient) {
-  }
-
   actionApiUrl = environment.springBootApiUrlhttp + "/action";
 
   selectedFile!: File;
   retrievedImage: any;
   base64Data: any;
-  retrieveResonse: any;
+  retrieveResponse!: string;
   message!: string;
-  imageName='h.jpg';
-
-  //Gets called when the user selects an image
-  public onFileChanged(event:any) {
-    //Select File
-    this.selectedFile = event.target.files[0];
+  imageName!: string;
+  constructor(private imageService: ImageService) {
+    this.subscribeToImageService();
   }
-  //Gets called when the user clicks on submit to upload the image
-  onUpload() {
-    console.log(this.selectedFile);
 
-    //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
-    const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
 
-    //Make a call to the Spring Boot Application to save the image
-    this.httpClient.post( this.actionApiUrl+'/upload', uploadImageData, { observe: 'response' })
-      .subscribe((response) => {
-          if (response.status === 200) {
-            this.message = 'Image uploaded successfully';
-          } else {
-            this.message = 'Image not uploaded successfully';
-          }
-        }
-      );
+
+  ngOnInit(): void {
   }
-  //Gets called when the user clicks on retieve image button to get the image from back end
-  getImage() {
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    console.log(this.imageName);
-    this.httpClient.get( this.actionApiUrl+'/get/' + this.imageName)
-      .subscribe(
-        res => {
-          this.retrieveResonse = res;
-          this.base64Data = this.retrieveResonse.picByte;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        }
-      );
+
+  //subscribe to the imageService
+  subscribeToImageService() {
+
+    this.imageService.selectedFile$.subscribe(
+      data => {
+        this.selectedFile = data;
+        console.log('selectedFile=' + this.selectedFile);
+      }
+    );
+
+    this.imageService.retrievedImage$.subscribe(
+      data => {
+        this.retrievedImage = data;
+        console.log('retrievedImage=' + this.retrievedImage);
+      }
+    );
+
+    this.imageService.base64Data$.subscribe(
+      data => {
+        this.base64Data = data;
+      }
+    );
+
+    this.imageService.retrieveResonse$.subscribe(
+      data => {
+        this.retrieveResponse = data;
+        console.log('retrieveResponse=' + this.retrieveResponse);
+      }
+    );
+
+    this.imageService.message$.subscribe(
+      data => {
+        this.message = data;
+        console.log('message=' + this.message);
+      }
+    );
+
+
   }
+
+  onFileChanged($event: Event) {
+    this.imageService.onFileChanged($event);
+    this.subscribeToImageService();
+  }
+
+onUpload() {
+    this.imageService.onUpload();
+  this.subscribeToImageService();
+  }
+
+  getImage(fileName: string) {
+    this.imageService.getImage(fileName);
+    this.subscribeToImageService();
+  }
+
+
 
 }
