@@ -22,15 +22,16 @@ export class ImageService {
   onFileChanged(event: any) {
     //Select File
     this.selectedFile$.next(event.target.files[0]);
+    return this.selectedFile$.value;
   }
   //Gets called when the user clicks on submit to upload the image
-  onUpload() {
+  onUpload(productId: number) {
     console.log(this.selectedFile$.value);
 
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.selectedFile$.value, this.selectedFile$.value?.name || '');
 
-    this.httpClient.post(this.actionApiUrl + '/upload', uploadImageData, { observe: 'response' })
+    this.httpClient.post(this.actionApiUrl + `/upload/${productId}`, uploadImageData, { observe: 'response' })
       .subscribe(
         (response) => {
           if (response.status === 200) {

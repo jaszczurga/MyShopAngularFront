@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ProductCategory} from "../../common/product-category";
 import {ProductService} from "../../services/product.service";
+import {ImageService} from "../../services/image.service";
 
 @Component({
   selector: 'app-add-product-dialog',
@@ -21,7 +22,8 @@ export class AddProductDialogComponent implements OnInit{
   constructor(
     public dialogRef: MatDialogRef<AddProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private productService: ProductService
+    private productService: ProductService,
+    private imageService: ImageService
   ) {}
 
   onNoClick(): void {
@@ -38,8 +40,15 @@ export class AddProductDialogComponent implements OnInit{
     )
   }
 
+  onFileChanged($event: Event) {
+//select file
+    this.data.ProductImageUrl = this.imageService.onFileChanged($event).name;
 
+  }
 
+  onUpload(productId:number) {
+    this.imageService.onUpload(productId);
+  }
 }
 
 export interface DialogData {
