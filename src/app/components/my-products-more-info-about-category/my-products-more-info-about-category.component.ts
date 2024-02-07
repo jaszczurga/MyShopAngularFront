@@ -237,6 +237,7 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         image.type = file.type;
         listOfImages.push(image);
       }));
+      //TODO - add images to product
       this.product.images = listOfImages;
 
       this.product.productName = result.ProductName;

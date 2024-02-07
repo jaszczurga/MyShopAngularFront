@@ -24,9 +24,10 @@
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>
           <td>{{tempProduct.productName}}</td>
           <td>{{tempProduct.productDescription}}</td>
-          <td><select>
-            <option *ngFor="let tempImage of tempProduct.images" [value]="tempImage.name">{{tempImage.name}}</option>
-          </select></td>
+          <td><select class="form-select" aria-label="Select Image">
+            <option *ngFor="let tempImage of tempProduct.images" value="{{tempImage.name}}">{{tempImage.name}}</option>
+          </select>
+          </td>
           <td>{{tempProduct.productPrice}}</td>
           <td>{{tempProduct.productStockQuantity}}</td>
           <td>{{tempProduct.category.categoryName}}</td>

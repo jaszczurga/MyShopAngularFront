@@ -42,10 +42,21 @@
       </mat-form-field>
     </div>
   </div>
+  <span>Add Images </span>
   <input type="file" (change)="onFileChanged($event)">
-  <select>
+  <select class="form-select" aria-label="Select Image" #selectedFile>
     <option *ngFor="let file of files" [value]="file.name">{{ file.name }}</option>
   </select>
+  <button mat-button (click)="deleteFromCurrentFiles(selectedFile.value)">delete</button>
+  <br>
+  <div *ngIf="data.Images && data.Images.length > 0">
+    <span>Delete from Added files</span>
+    <select class="form-select" aria-label="Select Image" #selectedImage>
+    <option *ngFor="let image of data.Images" [value]="image.id">{{ image.name }}</option>
+  </select>
+    <button mat-button  (click)="deleteFromCurrentImages(Number(selectedImage.value))">delete</button>
+  </div>
+
 </mat-dialog-content>
 
 <mat-dialog-actions>

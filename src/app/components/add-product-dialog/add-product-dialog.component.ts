@@ -63,6 +63,19 @@ export class AddProductDialogComponent implements OnInit{
   onUpload(productId:number) {
     //this.imageService.onUpload(productId);
   }
+
+  deleteFromCurrentFiles(name: string) {
+    console.log('deleting file with name: ' + name);
+    this.imageService.selectedFile$.next(this.files.filter(file => file.name !== name));
+    this.getCurrentlyAddedFiles();
+  }
+
+  deleteFromCurrentImages(id: number) {
+    console.log('deleting image with id: ' + id);
+    this.imageService.deleteImageById(id)
+  }
+
+  protected readonly Number = Number;
 }
 
 export interface DialogData {
@@ -72,5 +85,5 @@ export interface DialogData {
   ProductPrice: number;
   ProductStock: number;
   Category: ProductCategory;
-  //Images: ImageDto[];
+  Images: ImageDto[];
 }

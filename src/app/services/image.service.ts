@@ -95,6 +95,20 @@ export class ImageService {
     return this.httpClient.get<ImageDto[]>(this.actionApiUrl + `/image/${productId}?page=0&size=100`);
   }
 
+  //delete image by id
+  deleteImageById(id: number) {
+    console.log('deleting image with id: ' + id);
+    return this.httpClient.delete(this.actionApiUrl + `/deleteImage/${id}`).subscribe(
+      () => {
+        console.log('Image deleted successfully');
+        // Optionally, you can perform additional actions here after deletion
+      },
+      (error) => {
+        console.error('Error deleting image:', error);
+      }
+    );
+  }
+
 
 
 
