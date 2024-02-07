@@ -223,15 +223,26 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         ProductPrice: product.productPrice,
         ProductStock: product.productStockQuantity,
         Category: product.category,
-        Images: this.product.images
+        Images: product.images
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
+
+      let listOfImages: ImageDto[] = [];
+      await Promise.all(this.imageFiles.map(async (file) => {
+        let image = new ImageDto();
+        let base64 = await this.fileToBase64(file);
+        image.picByte = base64;
+        image.name = file.name;
+        image.type = file.type;
+        listOfImages.push(image);
+      }));
+      this.product.images = listOfImages;
 
       this.product.productName = result.ProductName;
       this.product.productDescription = result.ProductDescription;
      // this.product.productImage = result.ProductImageUrl;
-      this.product.images = result.Images;
+      //this.product.images = result.Images;
       this.product.productPrice = result.ProductPrice;
       this.product.productStockQuantity = result.ProductStock;
       this.product.category = new ProductCategory(result.Category.id, result.Category.categoryName,[]);
@@ -239,6 +250,7 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
       if(this.product.productName != "" && this.product.productName != null) {
         this.updateProduct(this.product, String(id));
       }
+      this.imageService.selectedFile$.next([]);
     });
   }
 
