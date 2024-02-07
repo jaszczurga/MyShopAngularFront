@@ -10,6 +10,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../add-product-dialog/add-product-dialog.component";
 import {ImageService} from "../../services/image.service";
 import {ImageDto} from "../../dto/image-dto";
+import {verifyHostBindings} from "@angular/compiler";
+import {concatWith} from "rxjs";
 
 @Component({
   selector: 'app-my-products-more-info-about-category',
@@ -23,6 +25,8 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
   currentCategoryId: number=1;
   previousCategoryId: number=1;
   theTotalElements: number = 0;
+
+  imageFiles: File[] = [];
 
 
 
@@ -151,35 +155,65 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     )
   }
 
+  updateImageFiles() {
+    this.imageService.selectedFile$.subscribe(
+      data => {
+        this.imageFiles = data;
+      }
+    )
+  }
 
 
+
+  //imagesToSave: ImageDto[] =  this.imageService.getListOfImagesDtoFromSelectedFiles(this.imageFiles);
 product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new CategoryDto(1, "choose category"), []);
   openDialogAddNewProduct(): void {
-
-    // let images: File[] = ImageService.selectedFiles;
 
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       data: {
         ProductName: "",
         ProductDescription: "",
-        ProductImageUrl: "",
+       // ProductImageUrl: "",
         ProductPrice: "",
         ProductStock: "",
         Category: this.product.category,
-        Images: this.product.images
+        //Images: this.product.images
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe( async result => {
+      console.log(result);
+      this.updateImageFiles()
+      console.log("lista zdjec")
+      console.log(this.imageService.getListOfImagesDtoFromSelectedFiles(this.imageFiles))
+      console.log("koniec listy zdjec")
+
+      let listOfImages: ImageDto[] = [];
+      await Promise.all(this.imageFiles.map(async (file) => {
+        let image = new ImageDto();
+        let base64 = await this.fileToBase64(file);
+        image.picByte = base64;
+        image.name = file.name;
+        image.type = file.type;
+        listOfImages.push(image);
+      }));
+
+
+      // let zdjecie = await this.fileToBase64(this.imageFiles[0]);
+      // console.log( "zdjecie" + zdjecie);
+
+
+      this.product.images = listOfImages;
 
       this.product.productName = result.ProductName;
       this.product.productDescription = result.ProductDescription;
      // this.product.productImage = result.ProductImageUrl;
-      this.product.images = result.Images;
       this.product.productPrice = result.ProductPrice;
       this.product.productStockQuantity = result.ProductStock;
       this.product.category = new ProductCategory(result.Category.id, result.Category.categoryName,[]);
       console.log(this.product);
       if(this.product.productName != "" && this.product.productName != null) {
+        console.log("zapisuje produkt");
+        console.log( JSON.stringify(this.product) );
         this.saveProduct(this.product);
       }
     });
@@ -212,5 +246,21 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
       }
     });
   }
+
+  fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        const base64Data = base64String.split(',')[1]; // Split at the first comma and take the second part
+        resolve(base64Data);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
 
 }

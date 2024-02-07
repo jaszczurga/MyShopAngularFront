@@ -28,6 +28,7 @@ export class AddProductDialogComponent implements OnInit{
   ) {}
 
   onNoClick(): void {
+    console.log(this.data);
     this.dialogRef.close();
   }
 
@@ -59,5 +60,5 @@ export interface DialogData {
   ProductPrice: number;
   ProductStock: number;
   Category: ProductCategory;
-  Images: ImageDto[];
+  //Images: ImageDto[];
 }

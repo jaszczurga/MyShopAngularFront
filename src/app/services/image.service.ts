@@ -31,16 +31,38 @@ export class ImageService {
     const updatedFileList = [...currentFileList, ...event.target.files];
     this.selectedFile$.next(updatedFileList);
     console.log(this.selectedFile$.value);
-    console.log(this.getListOfImagesDtoFromSelectedFiles());
+    //console.log(this.getListOfImagesDtoFromSelectedFiles());
     return "File changed";
   }
 
 
-  getListOfImagesDtoFromSelectedFiles(): ImageDto[] {
+  // getListOfImagesDtoFromSelectedFiles(): ImageDto[] {
+  //   const imageDtoList: ImageDto[] = [];
+  //   for (let i = 0; i < this.selectedFile$.value.length; i++) {
+  //     const imageDto: ImageDto = new ImageDto();
+  //     const file = this.selectedFile$.value[i];
+  //
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       const base64String = reader.result as string;
+  //       const base64StringWithoutData = this.extractBase64FromDataURI(base64String);
+  //
+  //       imageDto.picByte = base64StringWithoutData?.toString();
+  //       imageDto.name = file.name;
+  //       imageDto.type = file.type;
+  //
+  //       imageDtoList.push(imageDto);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  //   return imageDtoList;
+  // }
+
+  getListOfImagesDtoFromSelectedFiles(list:File[]): ImageDto[] {
     const imageDtoList: ImageDto[] = [];
-    for (let i = 0; i < this.selectedFile$.value.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       const imageDto: ImageDto = new ImageDto();
-      const file = this.selectedFile$.value[i];
+      const file = list[i];
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -55,6 +77,7 @@ export class ImageService {
       };
       reader.readAsDataURL(file);
     }
+
     return imageDtoList;
   }
 

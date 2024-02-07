@@ -22,13 +22,13 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="form-row">
-      <mat-form-field>
-        <mat-label>Product Image Url</mat-label>
-        <input matInput [(ngModel)]="data.Images">
-        <input type="file" (change)="onFileChanged($event)">
-      </mat-form-field>
-    </div>
+<!--    <div class="form-row">-->
+<!--      <mat-form-field>-->
+<!--        <mat-label>Product Image Url</mat-label>-->
+<!--        <input matInput [(ngModel)]="data.Images">-->
+<!--        <input type="file" (change)="onFileChanged($event)">-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
     <div class="form-row">
       <mat-form-field>
         <mat-label>Product Price</mat-label>
@@ -42,8 +42,10 @@
       </mat-form-field>
     </div>
   </div>
+  <input type="file" (change)="onFileChanged($event)">
 </mat-dialog-content>
+
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">close</button>
-<!--  <button mat-button [mat-dialog-close]="data" (click)="onUpload()" cdkFocusInitial>save</button>-->
+  <button mat-button [mat-dialog-close]="data"  cdkFocusInitial>save</button>
 </mat-dialog-actions>
