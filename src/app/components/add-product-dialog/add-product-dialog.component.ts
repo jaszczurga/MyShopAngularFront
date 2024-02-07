@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ProductCategory} from "../../common/product-category";
 import {ProductService} from "../../services/product.service";
 import {ImageService} from "../../services/image.service";
+import {ImageDto} from "../../dto/image-dto";
 
 @Component({
   selector: 'app-add-product-dialog',
@@ -42,20 +43,21 @@ export class AddProductDialogComponent implements OnInit{
 
   onFileChanged($event: Event) {
 //select file
-    this.data.ProductImageUrl = this.imageService.onFileChanged($event).name;
-
+    //this.data.Images.push(this.imageService.onFileChanged($event).name);
+    this.imageService.onFileChanged($event)
   }
 
   onUpload(productId:number) {
-    this.imageService.onUpload(productId);
+    //this.imageService.onUpload(productId);
   }
 }
 
 export interface DialogData {
   ProductName: string;
   ProductDescription: string;
-  ProductImageUrl: string;
+  //ProductImageUrl: string;
   ProductPrice: number;
   ProductStock: number;
   Category: ProductCategory;
+  Images: ImageDto[];
 }

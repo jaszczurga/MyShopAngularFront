@@ -17,7 +17,7 @@ export class ImageManagerComponent implements OnInit{
   message!: string;
   imageName!: string;
   constructor(private imageService: ImageService) {
-    this.subscribeToImageService();
+   // this.subscribeToImageService();
   }
 
 
@@ -25,60 +25,60 @@ export class ImageManagerComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  //subscribe to the imageService
-  subscribeToImageService() {
-
-    this.imageService.selectedFile$.subscribe(
-      data => {
-        this.selectedFile = data;
-        console.log('selectedFile=' + this.selectedFile);
-      }
-    );
-
-    this.imageService.retrievedImage$.subscribe(
-      data => {
-        this.retrievedImage = data;
-        console.log('retrievedImage=' + this.retrievedImage);
-      }
-    );
-
-    this.imageService.base64Data$.subscribe(
-      data => {
-        this.base64Data = data;
-      }
-    );
-
-    this.imageService.retrieveResonse$.subscribe(
-      data => {
-        this.retrieveResponse = data;
-        console.log('retrieveResponse=' + this.retrieveResponse);
-      }
-    );
-
-    this.imageService.message$.subscribe(
-      data => {
-        this.message = data;
-        console.log('message=' + this.message);
-      }
-    );
-
-
-  }
-
-  onFileChanged($event: Event) {
-    this.imageService.onFileChanged($event);
-    this.subscribeToImageService();
-  }
-
-onUpload() {
-    this.imageService.onUpload();
-  this.subscribeToImageService();
-  }
-
-  getImage(fileName: string) {
-    this.imageService.getImage(fileName);
-    this.subscribeToImageService();
-  }
+//   //subscribe to the imageService
+//   subscribeToImageService() {
+//
+//     this.imageService.selectedFile$.subscribe(
+//       data => {
+//         this.selectedFile = data;
+//         console.log('selectedFile=' + this.selectedFile);
+//       }
+//     );
+//
+//     this.imageService.retrievedImage$.subscribe(
+//       data => {
+//         this.retrievedImage = data;
+//         console.log('retrievedImage=' + this.retrievedImage);
+//       }
+//     );
+//
+//     this.imageService.base64Data$.subscribe(
+//       data => {
+//         this.base64Data = data;
+//       }
+//     );
+//
+//     this.imageService.retrieveResonse$.subscribe(
+//       data => {
+//         this.retrieveResponse = data;
+//         console.log('retrieveResponse=' + this.retrieveResponse);
+//       }
+//     );
+//
+//     this.imageService.message$.subscribe(
+//       data => {
+//         this.message = data;
+//         console.log('message=' + this.message);
+//       }
+//     );
+//
+//
+//   }
+//
+//   onFileChanged($event: Event) {
+//     this.imageService.onFileChanged($event);
+//     this.subscribeToImageService();
+//   }
+//
+// onUpload() {
+//     this.imageService.onUpload();
+//   this.subscribeToImageService();
+//   }
+//
+//   getImage(fileName: string) {
+//     this.imageService.getImage(fileName);
+//     this.subscribeToImageService();
+//   }
 
 
 

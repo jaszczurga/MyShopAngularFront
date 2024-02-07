@@ -8,6 +8,8 @@ import {CategoryDto} from "../../dto/category-dto";
 import {AddCategoryDialogComponent} from "../add-category-dialog/add-category-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../add-product-dialog/add-product-dialog.component";
+import {ImageService} from "../../services/image.service";
+import {ImageDto} from "../../dto/image-dto";
 
 @Component({
   selector: 'app-my-products-more-info-about-category',
@@ -33,7 +35,8 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
 
   constructor(private productService: ProductService,
               private route:ActivatedRoute,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private imageService: ImageService) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -150,8 +153,11 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
 
 
 
-product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new CategoryDto(1, "choose category"));
+product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new CategoryDto(1, "choose category"), []);
   openDialogAddNewProduct(): void {
+
+    // let images: File[] = ImageService.selectedFiles;
+
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       data: {
         ProductName: "",
@@ -160,13 +166,15 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         ProductPrice: "",
         ProductStock: "",
         Category: this.product.category,
+        Images: this.product.images
       },
     });
     dialogRef.afterClosed().subscribe(result => {
 
       this.product.productName = result.ProductName;
       this.product.productDescription = result.ProductDescription;
-      this.product.productImage = result.ProductImageUrl;
+     // this.product.productImage = result.ProductImageUrl;
+      this.product.images = result.Images;
       this.product.productPrice = result.ProductPrice;
       this.product.productStockQuantity = result.ProductStock;
       this.product.category = new ProductCategory(result.Category.id, result.Category.categoryName,[]);
@@ -177,22 +185,24 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
     });
   }
 
-  openDialogEditProduct(id:number,product:ProductDto): void {
+  openDialogEditProduct(id:number,product:Product): void {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       data: {
         ProductName: product.productName,
         ProductDescription: product.productDescription,
-        ProductImageUrl: product.productImage,
+       // ProductImageUrl: product.productImage,
         ProductPrice: product.productPrice,
         ProductStock: product.productStockQuantity,
         Category: product.category,
+        Images: this.product.images
       },
     });
     dialogRef.afterClosed().subscribe(result => {
 
       this.product.productName = result.ProductName;
       this.product.productDescription = result.ProductDescription;
-      this.product.productImage = result.ProductImageUrl;
+     // this.product.productImage = result.ProductImageUrl;
+      this.product.images = result.Images;
       this.product.productPrice = result.ProductPrice;
       this.product.productStockQuantity = result.ProductStock;
       this.product.category = new ProductCategory(result.Category.id, result.Category.categoryName,[]);
