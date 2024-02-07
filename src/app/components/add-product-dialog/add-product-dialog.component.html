@@ -43,9 +43,12 @@
     </div>
   </div>
   <input type="file" (change)="onFileChanged($event)">
+  <select>
+    <option *ngFor="let file of files" [value]="file.name">{{ file.name }}</option>
+  </select>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">close</button>
+  <button mat-button [mat-dialog-close]="data" (click)="onNoClick()">close</button>
   <button mat-button [mat-dialog-close]="data"  cdkFocusInitial>save</button>
 </mat-dialog-actions>

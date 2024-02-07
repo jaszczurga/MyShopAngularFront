@@ -13,11 +13,13 @@ import {ImageDto} from "../../dto/image-dto";
 export class AddProductDialogComponent implements OnInit{
 
   categories: ProductCategory[] = [];
+  files: File[] = [];
 
 
 
   ngOnInit() {
     this.getAllCategories();
+    this.getCurrentlyAddedFiles();
   }
 
   constructor(
@@ -29,6 +31,7 @@ export class AddProductDialogComponent implements OnInit{
 
   onNoClick(): void {
     console.log(this.data);
+    this.imageService.selectedFile$.next([]);
     this.dialogRef.close();
   }
 
@@ -38,6 +41,15 @@ export class AddProductDialogComponent implements OnInit{
       data => {
         console.log('Product Categories=' + JSON.stringify(data));
         this.categories = data.content;
+      }
+    )
+  }
+
+  //getCurrentlyAddedFiles
+  getCurrentlyAddedFiles() {
+    this.imageService.selectedFile$.subscribe(
+      data => {
+        this.files = data;
       }
     )
   }

@@ -196,12 +196,6 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         image.type = file.type;
         listOfImages.push(image);
       }));
-
-
-      // let zdjecie = await this.fileToBase64(this.imageFiles[0]);
-      // console.log( "zdjecie" + zdjecie);
-
-
       this.product.images = listOfImages;
 
       this.product.productName = result.ProductName;
@@ -216,6 +210,7 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         console.log( JSON.stringify(this.product) );
         this.saveProduct(this.product);
       }
+      this.imageService.selectedFile$.next([]);
     });
   }
 
