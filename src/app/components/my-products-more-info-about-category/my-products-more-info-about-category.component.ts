@@ -254,6 +254,7 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
     });
   }
 
+
   fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
