@@ -19,6 +19,7 @@ export class ProductService{
   ListOfRecentProducts: Subject<Product[]> = new BehaviorSubject<Product[]>([]);
   ListOfRecentCategories: Subject<ProductCategory[]> = new BehaviorSubject<ProductCategory[]>([]);
 
+
   constructor( private httpClient: HttpClient ) {
   }
 

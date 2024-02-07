@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {ImageDto} from "../dto/image-dto";
+import {Product} from "../common/product";
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,13 @@ export class ImageService {
     }
     return null;
   }
+
+  //get images of product by product id
+  getImagesOfProduct(productId: number):Observable<ImageDto[]> {
+    return this.httpClient.get<ImageDto[]>(this.actionApiUrl + `/image/${productId}?page=0&size=100`);
+  }
+
+
 
 
   // //Gets called when the user clicks on submit to upload the image

@@ -11,7 +11,7 @@ import {ProductService} from "../../services/product.service";
 })
 export class ProductContentDetailsComponent implements OnInit{
 
-  public product: Product = new Product(1, "Product 1", "This is a product", 100, 100, "assets/images/product-1.jpg", new ProductCategory(1, "Category 1",new Array())) ;
+  public product: Product = new Product(1, "Product 1", "This is a product", 100, 100, [], new ProductCategory(1, "Category 1",new Array())) ;
 
     constructor(private productService: ProductService,
                 private route:ActivatedRoute) {
