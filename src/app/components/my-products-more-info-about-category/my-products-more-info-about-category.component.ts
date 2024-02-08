@@ -228,7 +228,8 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
     });
     dialogRef.afterClosed().subscribe(async result => {
 
-      let listOfImages: ImageDto[] = product.images==null ? [] : product.images;
+      //let listOfImages: ImageDto[] = product.images==null ? [] : product.images;
+      let listOfImages: ImageDto[] = [];
 
       console.log("lista zdjec aktualna")
       console.log(product.images)
@@ -260,6 +261,7 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         console.log("zapisano produkt");
       }
       this.imageService.selectedFile$.next([]);
+      //this.productService.refreshListOfRecentProducts(0,50,this.currentCategoryId);
     });
   }
 

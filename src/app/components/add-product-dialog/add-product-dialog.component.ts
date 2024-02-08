@@ -72,7 +72,11 @@ export class AddProductDialogComponent implements OnInit{
 
   deleteFromCurrentImages(id: number) {
     console.log('deleting image with id: ' + id);
+    //deleting images form product with id
+    this.data.Images = this.data.Images.filter(image => image.id !== id);
     this.imageService.deleteImageById(id)
+    this.productService.refreshListOfRecentProducts(0,50,this.data.Category.id);
+    this.productService
   }
 
   protected readonly Number = Number;
