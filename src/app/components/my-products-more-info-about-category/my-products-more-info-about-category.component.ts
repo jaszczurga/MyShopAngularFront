@@ -228,7 +228,12 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
     });
     dialogRef.afterClosed().subscribe(async result => {
 
-      let listOfImages: ImageDto[] = [];
+      let listOfImages: ImageDto[] = product.images==null ? [] : product.images;
+
+      console.log("lista zdjec aktualna")
+      console.log(product.images)
+      this.updateImageFiles()
+
       await Promise.all(this.imageFiles.map(async (file) => {
         let image = new ImageDto();
         let base64 = await this.fileToBase64(file);
@@ -238,8 +243,8 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
         listOfImages.push(image);
       }));
       //TODO - add images to product
-      this.product.images = listOfImages;
 
+      this.product.images = listOfImages;
       this.product.productName = result.ProductName;
       this.product.productDescription = result.ProductDescription;
      // this.product.productImage = result.ProductImageUrl;
@@ -249,7 +254,10 @@ product: ProductDto = new ProductDto(1, "test", "test", 1, 1, "test", new Catego
       this.product.category = new ProductCategory(result.Category.id, result.Category.categoryName,[]);
       console.log(this.product);
       if(this.product.productName != "" && this.product.productName != null) {
+        console.log("zapisuje produkt");
+        console.log(JSON.stringify(this.product))
         this.updateProduct(this.product, String(id));
+        console.log("zapisano produkt");
       }
       this.imageService.selectedFile$.next([]);
     });
