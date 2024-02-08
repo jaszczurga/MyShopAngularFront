@@ -4,6 +4,9 @@ import {ProductCategory} from "../../common/product-category";
 import {ActivatedRoute} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {ImageService} from "../../services/image.service";
+import {CartService} from "../../services/cart.service";
+import {CartItem} from "../../common/cart-item";
+import {ProductDto} from "../../dto/product-dto";
 
 @Component({
   selector: 'app-product-content-details',
@@ -13,10 +16,11 @@ import {ImageService} from "../../services/image.service";
 export class ProductContentDetailsComponent implements OnInit{
 
   public product: Product = new Product(1, "Product 1", "This is a product", 100, 100, [], new ProductCategory(1, "Category 1",new Array())) ;
-
+  quantity: number = 1;
     constructor(private productService: ProductService,
                 private route:ActivatedRoute,
-                private imageService: ImageService) {
+                private imageService: ImageService,
+                private cartService: CartService) {
     }
 
     ngOnInit(): void {
@@ -43,6 +47,13 @@ export class ProductContentDetailsComponent implements OnInit{
       }
     );
   }
+  addToCart(product: Product) {
+    console.log(`Adding to cart: ${product.productName}, ${this.quantity}`);
+    const theCartItem = new CartItem(product);
+    theCartItem.quantity = this.quantity;
+    console.log(theCartItem.quantity);
+    this.cartService.addToCart(theCartItem);
+  }
 
-
+  protected readonly Number = Number;
 }

@@ -33,7 +33,7 @@ export class CartService {
     }
     if (alreadyExistsInCart) {
       //increment the quantity
-      existingCartItem!.quantity++;
+      existingCartItem!.quantity += theCartItem.quantity;
     }
     else {
       //just add the item to the array
