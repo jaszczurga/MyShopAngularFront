@@ -2,3 +2,42 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.cart-area {
+  position: relative;
+}
+
+.cart-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ffff; /* adjust color as needed */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.cart-link:hover {
+  background-color: #f0f0f0;
+}
+
+.fa-shopping-cart {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.cart-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.total {
+  font-weight: bold;
+}
+
+.quantity {
+  font-size: 14px;
+  color: #ffff; /* adjust color as needed */
+}
+
