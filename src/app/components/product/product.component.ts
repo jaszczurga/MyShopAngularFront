@@ -3,6 +3,8 @@ import {Product} from "../../common/product";
 import {ProductService} from "../../services/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {ImageService} from "../../services/image.service";
+import {CartItem} from "../../common/cart-item";
+import {CartService} from "../../services/cart.service";
 
 @Component({
   selector: 'app-product',
@@ -23,9 +25,12 @@ export class ProductComponent implements OnInit{
 
   previousKeyword: string ="";
 
+
+
     constructor(private productService: ProductService,
                 private route:ActivatedRoute,
-                private imageService: ImageService) {
+                private imageService: ImageService,
+                private cartService: CartService) {
     }
 
 
@@ -149,11 +154,6 @@ export class ProductComponent implements OnInit{
       this.theTotalElements=data.numberOfElements;
     }
   }
-
-
-
-
-
 
 
 }

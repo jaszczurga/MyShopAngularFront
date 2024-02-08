@@ -1,25 +1,20 @@
-<div class="container w-75 my-5">
-  <div class="card">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card-image">
-          <img class="card-img-top" style="max-width: 100%; height: auto;"
-               [src]="'data:' + product.images?.at(0)?.type + ';base64,' + product.images?.at(0)?.picByte"
-               alt="Product Image">
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h4 class="card-title">{{ product.productName }}</h4>
-          <h6 class="card-subtitle mb-2 text-muted">{{ product.productPrice | currency: 'PLN' }}</h6>
-          <p class="card-text">{{ product.productDescription }}</p>
-          <div class="input-group mb-3">
 
-            <input [(ngModel)]="quantity" type="number" class="form-control form-control-sm" min="1" placeholder="Quantity">
-            <button class="btn btn-primary" type="button" (click)="addToCart(product)">Add to Cart</button>
-          </div>
-        </div>
+  <div class="product-card">
+    <div class="product-image">
+      <button class="image-nav" (click)="prevImage()">Prev</button>
+      <img class="product-img"
+           [src]="'data:' + product.images?.at(currentImageIndex)?.type + ';base64,' + product.images?.at(currentImageIndex)?.picByte"
+           alt="Product Image">
+      <button class="image-nav" (click)="nextImage()">Next</button>
+    </div>
+    <div class="product-details">
+      <h2 class="product-title">{{ product.productName }}</h2>
+      <h4 class="product-price">{{ product.productPrice | currency: 'PLN' }}</h4>
+      <p class="product-description">{{ product.productDescription }}</p>
+      <div class="product-quantity">
+        <input [(ngModel)]="quantity" type="number" class="quantity-input" min="1" placeholder="Quantity">
+        <button class="add-to-cart-btn" type="button" (click)="addToCart(product)">Add to Cart</button>
       </div>
     </div>
   </div>
-</div>
+

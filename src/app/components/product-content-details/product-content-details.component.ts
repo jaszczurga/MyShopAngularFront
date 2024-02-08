@@ -54,6 +54,21 @@ export class ProductContentDetailsComponent implements OnInit{
     console.log(theCartItem.quantity);
     this.cartService.addToCart(theCartItem);
   }
+  currentImageIndex: number = 0;
+
+  prevImage() {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+    }
+  }
+
+  nextImage() {
+    if (this.product.images && this.currentImageIndex < this.product.images.length - 1) {
+      this.currentImageIndex++;
+    }
+  }
+
+
 
   protected readonly Number = Number;
 }
