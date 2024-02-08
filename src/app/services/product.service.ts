@@ -35,6 +35,8 @@ export class ProductService{
     });
   }
 
+
+
   //method to refresh actual list of the recent categories
   refreshListOfRecentCategories() {
     let receivedCategoriesDtoModel = this.getProductCategories();

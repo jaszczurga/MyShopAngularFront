@@ -24,9 +24,11 @@
           <td><button mat-button [matMenuTriggerFor]="menu">{{tempProduct.id}}</button></td>
           <td>{{tempProduct.productName}}</td>
           <td>{{tempProduct.productDescription}}</td>
-          <td><select class="form-select" aria-label="Select Image">
-            <option *ngFor="let tempImage of tempProduct.images" value="{{tempImage.name}}">{{tempImage.name}}</option>
+          <td>
+            <select class="form-select" aria-label="Select Image" #imageId>
+            <option *ngFor="let tempImage of tempProduct.images" value="{{tempImage.id}}">{{tempImage.name}}</option>
           </select>
+            <img [src]="'data:' + tempProduct.images?.at(Number(imageId))?.type + ';base64,' + tempProduct.images?.at(Number(imageId))?.picByte" class="img-fluid" style="max-width: 100px; max-height: 100px;">
           </td>
           <td>{{tempProduct.productPrice}}</td>
           <td>{{tempProduct.productStockQuantity}}</td>
