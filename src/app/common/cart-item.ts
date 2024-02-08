@@ -1,16 +1,17 @@
 import {Product} from "./product";
+import {ImageDto} from "../dto/image-dto";
 
 export class CartItem {
   id!:number;
   name!:string;
   unitPrice!:number;
   quantity!:number;
-  product!: any;
+  productImage!:ImageDto;
   constructor(product: Product) {
     this.id = product.id;
     this.name = product.productName;
     this.unitPrice = product.productPrice;
     this.quantity = 1;
-    this.product = product;
+    this.productImage = product.images![0];
   }
 }

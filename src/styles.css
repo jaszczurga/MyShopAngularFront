@@ -180,3 +180,43 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+/* cart details */
+
+.btn-group .btn-light {
+  cursor: default;
+}
+
+.btn-danger {
+  margin-right: 10px;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.rounded-table {
+  border-radius: 15px;
+  overflow: hidden;
+}
+.product-imageCart {
+  object-fit: cover;
+  width: 250px;
+  height: 200px;
+  border-radius: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.product-imageCart:hover {
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}

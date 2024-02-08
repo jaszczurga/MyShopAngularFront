@@ -51,7 +51,7 @@ export class ProductContentDetailsComponent implements OnInit{
     console.log(`Adding to cart: ${product.productName}, ${this.quantity}`);
     const theCartItem = new CartItem(product);
     theCartItem.quantity = this.quantity;
-    console.log(theCartItem.quantity);
+
     this.cartService.addToCart(theCartItem);
   }
   currentImageIndex: number = 0;

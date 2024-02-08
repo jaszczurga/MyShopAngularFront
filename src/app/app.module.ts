@@ -26,11 +26,13 @@ import { AddProductDialogComponent } from './components/add-product-dialog/add-p
 import {MatOption, MatSelect} from "@angular/material/select";
 import { ImageManagerComponent } from './components/image-manager/image-manager.component';
 import { CartComponent } from './components/cart/cart.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 
 
 
 const routes: Routes = [
+  {path: 'cart-details', component: CartDetailsComponent},
   {path: 'image-manager', component: ImageManagerComponent},
   {path: 'products', component: ProductComponent},
   {path: 'products/:id', component: ProductContentDetailsComponent},
@@ -56,6 +58,7 @@ const routes: Routes = [
     AddProductDialogComponent,
     ImageManagerComponent,
     CartComponent,
+    CartDetailsComponent,
   ],
   imports: [
     MatDialogModule,
