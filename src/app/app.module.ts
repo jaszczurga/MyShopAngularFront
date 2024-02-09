@@ -27,6 +27,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import { ImageManagerComponent } from './components/image-manager/image-manager.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 
@@ -59,6 +60,7 @@ const routes: Routes = [
     ImageManagerComponent,
     CartComponent,
     CartDetailsComponent,
+    CheckoutComponent,
   ],
   imports: [
     MatDialogModule,
