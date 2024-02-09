@@ -33,6 +33,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 const routes: Routes = [
+  {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'image-manager', component: ImageManagerComponent},
   {path: 'products', component: ProductComponent},

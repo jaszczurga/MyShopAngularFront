@@ -7,6 +7,7 @@ export class CartItem {
   unitPrice!:number;
   quantity!:number;
   productImage!:ImageDto;
+  product!: Product;
   constructor(product: Product) {
     this.id = product.id;
     this.name = product.productName;
