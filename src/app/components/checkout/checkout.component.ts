@@ -5,10 +5,9 @@ import {CartService} from "../../services/cart.service";
 import {CheckoutService} from "../../services/checkout.service";
 import {Router} from "@angular/router";
 import {PaymentInfo} from "../../common/payment-info";
-import {Address} from "../../common/address";
-import {MyValidators} from "../../validators/my-validators";
 import {Purchase} from "../../common/purchase";
 import {OrderItem} from "../../common/order-item";
+import {SpaceValidate} from "../../validators/space-validate";
 
 @Component({
   selector: 'app-checkout',
@@ -75,29 +74,29 @@ export class CheckoutComponent implements OnInit{
         firstName: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
-          MyValidators.notOnlyWhitespace
+          SpaceValidate.notOnlyWhitespace
         ]),
         lastName: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
-          MyValidators.notOnlyWhitespace
+          SpaceValidate.notOnlyWhitespace
         ]),
         email: new FormControl(theEmail,[
           Validators.required,
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-          MyValidators.notOnlyWhitespace
+         SpaceValidate.notOnlyWhitespace
         ]),
       }),
       Address: this.formBuilder.group({
         street: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
-          MyValidators.notOnlyWhitespace
+         SpaceValidate.notOnlyWhitespace
         ]),
         city: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
-          MyValidators.notOnlyWhitespace
+          SpaceValidate.notOnlyWhitespace
         ]),
         state: new FormControl('', [
           Validators.required
@@ -108,7 +107,7 @@ export class CheckoutComponent implements OnInit{
         zipCode: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
-          MyValidators.notOnlyWhitespace
+          SpaceValidate.notOnlyWhitespace
         ])
       }),
       creditCard: this.formBuilder.group({
@@ -142,24 +141,6 @@ get AddressStreet() {
   }
   get AddressZipCode() {
     return this.checkoutFormGroup.get('Address.zipCode')
-  }
-  get creditCardType() {
-    return this.checkoutFormGroup.get('creditCard.cardType')
-  }
-  get creditCardNameOnCard() {
-    return this.checkoutFormGroup.get('creditCard.nameOnCard')
-  }
-  get creditCardNumber() {
-    return this.checkoutFormGroup.get('creditCard.cardNumber')
-  }
-  get creditCardSecurityCode() {
-    return this.checkoutFormGroup.get('creditCard.securityCode')
-  }
-  get creditCardExpirationMonth() {
-    return this.checkoutFormGroup.get('creditCard.expirationMonth')
-  }
-  get creditCardExpirationYear() {
-    return this.checkoutFormGroup.get('creditCard.expirationYear')
   }
 
 
@@ -196,10 +177,13 @@ get AddressStreet() {
     //populate purchase - order and orderItems
     purchase.order = order;
     purchase.orderItems = orderItems;
+    purchase.address = this.checkoutFormGroup.controls['Address'].value;
+
+
 
     this.paymentInfo.amount = Math.round(this.totalPrice*100)
-    this.paymentInfo.currency = 'USD';
-    //this.paymentInfo. = purchase.customer.email;
+    this.paymentInfo.currency = 'PLN';
+    this.paymentInfo.receiptEmail = purchase.customer.email;
 
 
 
@@ -257,22 +241,6 @@ get AddressStreet() {
 
   }
 
-
-  handleMonthsAndYears() {
-    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard')!;
-    const currentYear: number = new Date().getFullYear();
-    const selectedYear: number = Number(creditCardFormGroup.value.expirationYear);
-
-    // if the current year equals the selected year, then start with the current month
-    let startMonth: number;
-
-    if (currentYear === selectedYear) {
-      startMonth = new Date().getMonth() + 2;
-    } else {
-      startMonth = 1;
-    }
-
-  }
 
   getStates(formGroupName: string) {
     const formGroup = this.checkoutFormGroup.get(formGroupName)!;
