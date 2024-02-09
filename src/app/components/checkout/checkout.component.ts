@@ -33,6 +33,25 @@ export class CheckoutComponent implements OnInit{
 
   isDisabled: boolean = false;
 
+   statesInPoland: string[] = [
+    'Dolnośląskie',
+    'Kujawsko-Pomorskie',
+    'Lubelskie',
+    'Lubuskie',
+    'Łódzkie',
+    'Małopolskie',
+    'Mazowieckie',
+    'Opolskie',
+    'Podkarpackie',
+    'Podlaskie',
+    'Pomorskie',
+    'Śląskie',
+    'Świętokrzyskie',
+    'Warmińsko-Mazurskie',
+    'Wielkopolskie',
+    'Zachodniopomorskie'
+  ];
+
 
   constructor(private formBuilder: FormBuilder,
               private cartService: CartService,
@@ -319,4 +338,35 @@ get AddressStreet() {
 
 
   }
+
+
+  countriesInEU: string[] = [
+    'Austria',
+    'Belgium',
+    'Bulgaria',
+    'Croatia',
+    'Republic of Cyprus',
+    'Czech Republic',
+    'Denmark',
+    'Estonia',
+    'Finland',
+    'France',
+    'Germany',
+    'Greece',
+    'Hungary',
+    'Ireland',
+    'Italy',
+    'Latvia',
+    'Lithuania',
+    'Luxembourg',
+    'Malta',
+    'Netherlands',
+    'Poland',
+    'Portugal',
+    'Romania',
+    'Slovakia',
+    'Slovenia',
+    'Spain',
+    'Sweden'
+  ];
 }

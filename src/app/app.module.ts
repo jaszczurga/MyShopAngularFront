@@ -21,7 +21,7 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { AddCategoryDialogComponent } from './components/add-category-dialog/add-category-dialog.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
 import {MatOption, MatSelect} from "@angular/material/select";
 import { ImageManagerComponent } from './components/image-manager/image-manager.component';
@@ -77,7 +77,8 @@ const routes: Routes = [
     MatIcon,
     FormsModule,
     MatSelect,
-    MatOption
+    MatOption,
+    ReactiveFormsModule
   ],
   providers: [
     provideAnimationsAsync('noop')
