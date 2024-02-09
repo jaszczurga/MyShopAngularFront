@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Purchase} from "../common/purchase";
+import {PaymentInfo} from "../common/payment-info";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {Purchase} from "../common/purchase";
 export class CheckoutService {
 
   private purchaseUrl = environment.springBootApiUrlhttp + '/checkout/purchase';
+  private paymentIntentUrl = environment.springBootApiUrlhttp + '/checkout/payment-intent';
 
   constructor(private httpClient: HttpClient) { }
 
