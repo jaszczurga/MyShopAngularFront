@@ -283,3 +283,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .btn-info:hover {
   background-color: #138496;
 }
+
+/* login status */
+.login-area {
+  position: relative;
+}
+
+.login-link {
+  display: flex;
+  align-items: center;
+}
+
+.login-link button {
+  background: none;
+  border: none;
+  color: #fff; /* adjust color as needed */
+  transition: all 0.3s ease;
+}
+
+.login-link button:hover {
+  color: #ccc; /* adjust color as needed */
+}

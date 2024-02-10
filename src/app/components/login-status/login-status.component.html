@@ -1,0 +1,11 @@
+<div class="login-area">
+  <div class="login-link">
+    <div *ngIf="isAuthenticatd && userFullName" >
+      Welcome, {{userFullName}}!
+    </div>
+    <button *ngIf="!isAuthenticatd" routerLink="/login" class="btn btn-outline-light">Login</button>
+    <button *ngIf="isAuthenticatd" (click)="logout()" class="btn btn-outline-light">Logout</button>
+    <button *ngIf="isAuthenticatd" routerLink="/members" class="btn btn-outline-light">Member</button>
+    <button *ngIf="isAuthenticatd" routerLink="/order-history" class="btn btn-outline-light">Orders</button>
+  </div>
+</div>
