@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { ProductCategoryOffCanvaComponent } from './components/product-category-off-canva/product-category-off-canva.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { ProductComponent } from './components/product/product.component';
-import {RouterModule, Routes} from "@angular/router";
+import {Router, RouterModule, Routes} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MyProductsComponent } from './components/my-products/my-products.component';
@@ -33,26 +33,35 @@ import { LoginStatusComponent } from './components/login-status/login-status.com
 import {OKTA_CONFIG, OktaAuthModule, OktaCallbackComponent,OktaAuthGuard} from "@okta/okta-angular";
 import OktaAuth from "@okta/okta-auth-js";
 import myAppConfig from "./config/my-app-config";
+import {AuthInterceptorService} from "./services/auth-interceptor.service";
+import {ProductService} from "./services/product.service";
 
 
 const oktaConfig = myAppConfig.oidc;
 
 const oktaAuth = new OktaAuth(oktaConfig);
 
+function sendToLoginPage(oktaAuth: OktaAuth,injector: Injector) {
+  //use injector to access any service available in app
+  const router = injector.get(Router);
+  //redirect the user to your custom login page
+  router.navigate(['/login']);
+}
+
 
 const routes: Routes = [
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'cart-details', component: CartDetailsComponent},
-  {path: 'image-manager', component: ImageManagerComponent},
-  {path: 'products', component: ProductComponent},
-  {path: 'products/:id', component: ProductContentDetailsComponent},
-  {path: 'category', component: ProductComponent},
-  {path: 'search/:keyword', component: ProductComponent},
-  {path: 'category/:id', component: ProductComponent},
-  {path: 'my-products', component: MyProductsComponent},
-  {path: 'my-products/:id', component: MyProductsMoreInfoAboutCategoryComponent},
+  {path: 'checkout', component: CheckoutComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'cart-details', component: CartDetailsComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'image-manager', component: ImageManagerComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'products', component: ProductComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'products/:id', component: ProductContentDetailsComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'category', component: ProductComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'search/:keyword', component: ProductComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'category/:id', component: ProductComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'my-products', component: MyProductsComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
+  {path: 'my-products/:id', component: MyProductsMoreInfoAboutCategoryComponent, canActivate: [OktaAuthGuard], data: {onAuthRequired: sendToLoginPage}},
   {path: '', redirectTo: '/products', pathMatch: 'full'},
   {path: '**', redirectTo: '/products', pathMatch: 'full'},
 ];
@@ -93,11 +102,16 @@ const routes: Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
-  providers: [
+  providers: [ProductService,
     provideAnimationsAsync('noop'),
     {
       provide : OKTA_CONFIG,
       useValue : {oktaAuth}},
+    {
+      provide : HTTP_INTERCEPTORS, //this is a token that tells Angular we are providing an HTTP interceptor
+      useClass : AuthInterceptorService, //this is the class that implements HttpInterceptor we created
+      multi : true
+    }
   ],
   bootstrap: [AppComponent]
 })

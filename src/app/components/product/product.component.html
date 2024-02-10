@@ -5,7 +5,7 @@
       <div class="card-body p-4" style="height: 150px;overflow: hidden">
         <h4 class="card-title">{{tempProduct.productName}}</h4>
         <h6 class="card-text">{{tempProduct.id}}</h6>
-        <p class="card-text">{{tempProduct.productDescription}} ...</p>
+        <p class="card-text" >{{tempProduct.productDescription | slice:0:50}} ...</p>
       </div>
     </div>
   </div>

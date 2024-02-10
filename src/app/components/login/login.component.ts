@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit{
         pkce: true,
         issuer: myAppConfig.oidc.issuer,
         scopes: myAppConfig.oidc.scopes
+      },
+      features: {
+        registration: true
       }
     });
     // All configuration options can be found at
