@@ -28,6 +28,7 @@ import { ImageManagerComponent } from './components/image-manager/image-manager.
 import { CartComponent } from './components/cart/cart.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -62,6 +63,7 @@ const routes: Routes = [
     CartComponent,
     CartDetailsComponent,
     CheckoutComponent,
+    LoginComponent,
   ],
   imports: [
     MatDialogModule,
