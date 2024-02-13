@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ProductCategoryOffCanvaComponent } from './components/product-category-off-canva/product-category-off-canva.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { ProductComponent } from './components/product/product.component';
 import {RouterModule, Routes} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -28,6 +28,8 @@ import { ImageManagerComponent } from './components/image-manager/image-manager.
 import { CartComponent } from './components/cart/cart.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import {JwtInterceptor} from "./configuration/jwt-interceptor";
+
 
 
 
@@ -81,7 +83,8 @@ const routes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
-    provideAnimationsAsync('noop')
+    provideAnimationsAsync('noop'),
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
