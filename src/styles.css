@@ -283,3 +283,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .btn-info:hover {
   background-color: #138496;
 }
+/*register form*/
+
+
+
+.container {
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  height: 40px;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #3f51b5;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}

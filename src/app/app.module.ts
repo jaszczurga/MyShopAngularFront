@@ -29,12 +29,14 @@ import { CartComponent } from './components/cart/cart.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import {JwtInterceptor} from "./configuration/jwt-interceptor";
+import { RegisterComponent } from './components/register/register.component';
 
 
 
 
 
 const routes: Routes = [
+  {path: 'register', component: RegisterComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'image-manager', component: ImageManagerComponent},
@@ -64,6 +66,7 @@ const routes: Routes = [
     CartComponent,
     CartDetailsComponent,
     CheckoutComponent,
+    RegisterComponent,
   ],
   imports: [
     MatDialogModule,

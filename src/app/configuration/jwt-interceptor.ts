@@ -9,6 +9,11 @@ export class JwtInterceptor implements HttpInterceptor {
    // let jwtToken = localStorage.getItem('jwtToken');
     let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IlVTRVIiLCJzdWIiOiJ0ZXN0QUB0ZXN0LmNvbSIsImlhdCI6MTcwNzg0OTQ2OSwiZXhwIjoxNzA3ODUwOTA5fQ.HuIqxPwDkFP6COAtgC6_c71d9LWJ4yYTbTM-2WoIg2k"
 
+    if(request.url.includes('register')){
+      return next.handle(request);
+    }
+
+
     // clone the request and add the JWT token in the Authorization header
     if (jwtToken) {
       request = request.clone({

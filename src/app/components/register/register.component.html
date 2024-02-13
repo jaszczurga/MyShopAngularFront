@@ -1,0 +1,22 @@
+<div class="container">
+  <h2 style="text-align: center; color: #0528fd;">Register</h2>
+  <form (ngSubmit)="registerNewUser(username.value, email.value, password.value, confirmPassword.value)" style="max-width: 500px; margin: auto;">
+    <div class="form-group">
+      <label for="username" style="color: white">Username:</label>
+      <input type="text" id="username" #username class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="email" style="color: white">Email:</label>
+      <input type="email" id="email" #email class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="password" style="color: white">Password:</label>
+      <input type="password" id="password" #password class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword" style="color: white">Confirm Password:</label>
+      <input type="password" id="confirmPassword" #confirmPassword class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+  </form>
+</div>
