@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {RegisterResponseDto} from "../dto/register-response-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,7 @@ export class AuthenticationService {
 
     console.log('registerRequestDto=' + JSON.stringify(registerRequestDto));
     //send the request to the backend
-    return this.httpClient.post("http://localhost:8080/api/v1/auth/register", registerRequestDto);
+    return this.httpClient.post<RegisterResponseDto>("http://localhost:8080/api/v1/auth/register", registerRequestDto);
   }
-
-
 
 }
