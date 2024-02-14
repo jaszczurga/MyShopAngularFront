@@ -25,4 +25,17 @@ export class AuthenticationService {
     return this.httpClient.post<RegisterResponseDto>("http://localhost:8080/api/v1/auth/register", registerRequestDto);
   }
 
+  //login user to the backend
+  loginUser(email: string, password: string) {
+    //dto of the login request
+    const loginRequestDto = {
+      email: email,
+      password: password
+    };
+
+    console.log('loginRequestDto=' + JSON.stringify(loginRequestDto));
+    //send the request to the backend
+    return this.httpClient.post<RegisterResponseDto>("http://localhost:8080/api/v1/auth/authenticate", loginRequestDto);
+  }
+
 }

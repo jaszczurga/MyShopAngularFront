@@ -18,7 +18,7 @@ export class JwtInterceptor implements HttpInterceptor {
     const jwtToken = this.cookieService.get('jwtToken');
 
 
-    if(request.url.includes('register')){
+    if(request.url.includes('register') || request.url.includes('login')) {
       return next.handle(request);
     }
 
