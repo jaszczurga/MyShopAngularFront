@@ -1,15 +1,27 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {RegisterResponseDto} from "../dto/register-response-dto";
 import {CookieService} from "ngx-cookie-service";
+import {BehaviorSubject, Subject} from "rxjs";
+import {Product} from "../common/product";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements OnInit{
+
+  //create role list for current user subscribable for components
+  CurrentUserRoles: Subject<string | null> = new BehaviorSubject<string | null>(null);
+
+
 
   constructor(private httpClient: HttpClient,
               private cookieService: CookieService) { }
+
+
+  ngOnInit(): void {
+    this.getCurrentUserRolesRequest();
+  }
 
   //register new user to the backend
 
@@ -37,7 +49,8 @@ export class AuthenticationService {
 
     console.log('loginRequestDto=' + JSON.stringify(loginRequestDto));
     //send the request to the backend
-    return this.httpClient.post<RegisterResponseDto>("http://localhost:8080/api/v1/auth/authenticate", loginRequestDto);
+    let res =  this.httpClient.post<RegisterResponseDto>("http://localhost:8080/api/v1/auth/authenticate", loginRequestDto);
+    return res;
   }
 
   //logout user from the backend
@@ -46,4 +59,16 @@ export class AuthenticationService {
     this.cookieService.delete('jwtToken');
   }
 
+  //get current user roles
+  getCurrentUserRolesRequest() {
+    //send the request to the backend
+    let respone = this.httpClient.get<roles>("http://localhost:8080/api/v1/auth/roles");
+    respone.subscribe(data => {
+      this.CurrentUserRoles.next(data.rolesString);
+    });
+  }
+}
+
+interface roles {
+  rolesString: string ;
 }

@@ -10,10 +10,17 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class NavBarComponent implements OnInit{
 
+
+//user roles
+  roles: string = '';
+
   constructor(private router : Router,
               private cookieService: CookieService,
               private authService: AuthenticationService) {
   }
+
+
+
 
   //check if the user is logged in
   isLoggedIn() {
@@ -28,6 +35,12 @@ export class NavBarComponent implements OnInit{
 
 
   ngOnInit(): void {
+    this.authService.CurrentUserRoles.subscribe(
+      data => {
+        console.log('dataRolesa=' + data);
+        this.roles = data || '';
+      }
+    );
   }
 
   doSearch(value: string) {

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {CookieService} from "ngx-cookie-service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,8 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(private authenticationService: AuthenticationService,
-              private cookieService: CookieService) {
+              private cookieService: CookieService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -25,8 +27,9 @@ export class RegisterComponent implements OnInit {
         //save token to the cookie
         this.cookieService.set('jwtToken', data.token, {secure: true, sameSite: 'Strict'});
         console.log('jwtToken=' + this.cookieService.get('jwtToken'));
+        this.authenticationService.getCurrentUserRolesRequest();
         //redirect to main page
-        window.location.href = '/';
+        this.router.navigate(['/']);
       }
     );
   }
