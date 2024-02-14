@@ -17,7 +17,8 @@
         <li class="nav-item"><a class="nav-link active" routerLink="/my-products" routerLinkActive="active-link">MyProducts</a></li>
         <li class="nav-item"><a class="nav-link active" href="#">Orders</a></li>
         <li class="nav-item"><a class="nav-link" href="#">MyCart</a></li>
-        <li class="nav-item"><a class="nav-link active" routerLink="/login" routerLinkActive="active-link">Login</a></li>
+        <li class="nav-item" *ngIf="isLoggedIn()"><a class="nav-link active" (click)="logoutUser()" routerLink="/" routerLinkActive="active-link">Logout</a></li>
+        <li class="nav-item" *ngIf="!isLoggedIn()"><a class="nav-link active" routerLink="/login" routerLinkActive="active-link">Login</a></li>
       </ul>
     </div>
   </div>

@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,8 +10,22 @@ import {Router} from "@angular/router";
 })
 export class NavBarComponent implements OnInit{
 
-  constructor(private router : Router) {
+  constructor(private router : Router,
+              private cookieService: CookieService,
+              private authService: AuthenticationService) {
   }
+
+  //check if the user is logged in
+  isLoggedIn() {
+    return this.cookieService.get('jwtToken') !== '';
+  }
+
+  //logout user
+  logoutUser() {
+    this.authService.logoutUser();
+    window.location.href = '/';
+  }
+
 
   ngOnInit(): void {
   }
