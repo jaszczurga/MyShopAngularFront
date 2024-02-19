@@ -1,0 +1,45 @@
+<div>
+  <div class="container w-75 my-5">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="bg-gradient">
+        <tr>
+          <th class="bg-dark-subtle">ID</th>
+          <th class="bg-dark-subtle">Tracking Number</th>
+          <th class="bg-dark-subtle">Total Quantity</th>
+          <th class="bg-dark-subtle">Total Price</th>
+          <th class="bg-dark-subtle">Status</th>
+          <th class="bg-dark-subtle">Date Created</th>
+          <th class="bg-dark-subtle">Last Updated</th>
+          <th class="bg-dark-subtle">Customer</th>
+          <th class="bg-dark-subtle">Order Items</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let order of ListOfOrders">
+          <td>{{order.id}}</td>
+          <td>{{order.orderTrackingNumber}}</td>
+          <td>{{order.totalQuantity}}</td>
+          <td>{{order.totalPrice}}</td>
+          <td>{{order.status}}</td>
+          <td>{{order.dateCreated}}</td>
+          <td>{{order.lastUpdated}}</td>
+          <td>
+            {{order.customer.firstName}} {{order.customer.lastName}}<br>
+            {{order.customer.email}}<br>
+            {{order.customer.phoneNumber}}<br>
+            {{order.customer.street}}, {{order.customer.city}}, {{order.customer.state}}, {{order.customer.country}}, {{order.customer.zipCode}}
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let item of order.orderItems">
+                {{item.productName}} ({{item.quantity}}) - {{item.unitPrice}}
+              </li>
+            </ul>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

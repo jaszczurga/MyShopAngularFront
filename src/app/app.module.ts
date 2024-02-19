@@ -31,12 +31,14 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import {JwtInterceptor} from "./configuration/jwt-interceptor";
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 
 
 
 const routes: Routes = [
+  {path: 'orders', component: OrdersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'checkout', component: CheckoutComponent},
@@ -70,6 +72,7 @@ const routes: Routes = [
     CheckoutComponent,
     RegisterComponent,
     LoginComponent,
+    OrdersComponent,
   ],
   imports: [
     MatDialogModule,
