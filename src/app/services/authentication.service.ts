@@ -4,6 +4,7 @@ import {RegisterResponseDto} from "../dto/register-response-dto";
 import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject, Subject} from "rxjs";
 import {Product} from "../common/product";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthenticationService implements OnInit{
 
 
   constructor(private httpClient: HttpClient,
-              private cookieService: CookieService) { }
+              private cookieService: CookieService,
+              private jwtHelper: JwtHelperService) { }
 
 
   ngOnInit(): void {
@@ -67,6 +69,22 @@ export class AuthenticationService implements OnInit{
       this.CurrentUserRoles.next(data.rolesString);
     });
   }
+
+  isLoggedIn() {
+    if(this.cookieService.get('jwtToken') !== '' && !this.jwtHelper.isTokenExpired(this.cookieService.get('jwtToken'))){
+      return true;
+    }else {
+      this.cookieService.delete('jwtToken');
+      return false;
+    }
+  }
+
+  //get jwt token
+  getJwtToken() {
+    return this.cookieService.get('jwtToken');
+  }
+
+
 }
 
 interface roles {

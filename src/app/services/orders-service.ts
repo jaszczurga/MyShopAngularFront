@@ -13,8 +13,13 @@ export class OrdersService {
 
 public getOrders() {
     return this.httpClient.get<OrderResponse>('http://localhost:8080/api/orders/allOrders')
-
 }
+
+public getOrdersByCustomerEmail() {
+    return this.httpClient.get<OrderResponse>('http://localhost:8080/api/orders/customerOrders')
+}
+
+
 }
 
 

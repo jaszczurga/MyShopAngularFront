@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrdersService} from "../../services/orders-service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-orders',
@@ -9,19 +10,39 @@ import {OrdersService} from "../../services/orders-service";
 export class OrdersComponent implements OnInit{
 
   ListOfOrders: any = [];
+  protected roles: string ="";
+  loggedIn: boolean = false;
 
-constructor(private ordersService: OrdersService) {
+constructor(private ordersService: OrdersService,
+            private authService: AuthenticationService) {
   }
 
 
 
   ngOnInit(): void {
-    this.ordersService.getOrders().subscribe(
+  this.loggedIn = this.authService.isLoggedIn();
+    this.authService.CurrentUserRoles.subscribe(
       data => {
-        this.ListOfOrders = data.orders;
-        console.log('ListOfOrders=' + JSON.stringify(data.orders));
+        console.log('dataRolesa=' + data);
+        this.roles = data || '';
+
+        if(this.roles.includes('ADMIN')){
+          this.ordersService.getOrders().subscribe(
+            data => {
+              this.ListOfOrders = data.orders;
+              console.log('ListOfOrders=' + JSON.stringify(data.orders));
+            }
+          )
+        }else {
+          this.ordersService.getOrdersByCustomerEmail().subscribe(
+            data => {
+              this.ListOfOrders = data.orders;
+              console.log('ListOfOrders=' + JSON.stringify(data.orders));
+            }
+          )
+        }
       }
-    )
+    );
   }
 
 }

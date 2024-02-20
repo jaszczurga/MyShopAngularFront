@@ -1,45 +1,28 @@
-<div>
-  <div class="container w-75 my-5">
-    <div class="table-responsive">
-      <table class="table">
-        <thead class="bg-gradient">
-        <tr>
-          <th class="bg-dark-subtle">ID</th>
-          <th class="bg-dark-subtle">Tracking Number</th>
-          <th class="bg-dark-subtle">Total Quantity</th>
-          <th class="bg-dark-subtle">Total Price</th>
-          <th class="bg-dark-subtle">Status</th>
-          <th class="bg-dark-subtle">Date Created</th>
-          <th class="bg-dark-subtle">Last Updated</th>
-          <th class="bg-dark-subtle">Customer</th>
-          <th class="bg-dark-subtle">Order Items</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let order of ListOfOrders">
-          <td>{{order.id}}</td>
-          <td>{{order.orderTrackingNumber}}</td>
-          <td>{{order.totalQuantity}}</td>
-          <td>{{order.totalPrice}}</td>
-          <td>{{order.status}}</td>
-          <td>{{order.dateCreated}}</td>
-          <td>{{order.lastUpdated}}</td>
-          <td>
-            {{order.customer.firstName}} {{order.customer.lastName}}<br>
+<div class="container w-75 my-5" *ngIf="loggedIn">
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col" *ngFor="let order of ListOfOrders">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{order.customer.firstName}} {{order.customer.lastName}}</h5>
+          <p class="card-text">
+            <strong>Tracking Number:</strong> {{order.orderTrackingNumber}}<br>
+            <strong>Total Quantity:</strong> {{order.totalQuantity}}<br>
+            <strong>Total Price:</strong> {{order.totalPrice}}<br>
+            <strong>Status:</strong> {{order.status}}<br>
+            <strong>Date Created:</strong> {{order.dateCreated}}<br>
+            <strong>Last Updated:</strong> {{order.lastUpdated}}<br>
+            <strong>Customer Info:</strong><br>
             {{order.customer.email}}<br>
             {{order.customer.phoneNumber}}<br>
-            {{order.customer.street}}, {{order.customer.city}}, {{order.customer.state}}, {{order.customer.country}}, {{order.customer.zipCode}}
-          </td>
-          <td>
-            <ul>
-              <li *ngFor="let item of order.orderItems">
-                {{item.productName}} ({{item.quantity}}) - {{item.unitPrice}}
-              </li>
-            </ul>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+            {{order.customer.street}}, {{order.customer.city}}, {{order.customer.state}}, {{order.customer.country}}, {{order.customer.zipCode}}<br>
+            <strong>Order Items:</strong>
+          <ul class="list-unstyled">
+            <li *ngFor="let item of order.orderItems">
+              {{item.productName}} ({{item.quantity}}) - {{item.unitPrice}}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit{
 
   //check if the user is logged in
   isLoggedIn() {
-    return this.cookieService.get('jwtToken') !== '';
+    return this.authService.isLoggedIn();
   }
 
   //logout user

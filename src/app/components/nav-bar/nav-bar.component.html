@@ -14,7 +14,7 @@
 
       <ul class="navbar-nav ms-auto">
         <div><app-cart></app-cart></div>
-        <li class="nav-item" *ngIf="roles.length>0" ><a class="nav-link active" routerLink="/my-products" routerLinkActive="active-link">MyProducts</a></li>
+        <li class="nav-item" *ngIf="roles.includes('ADMIN')" ><a class="nav-link active" routerLink="/my-products" routerLinkActive="active-link">MyProducts</a></li>
         <li class="nav-item"><a class="nav-link active" routerLink="/orders" routerLinkActive="active-link">Orders</a></li>
         <li class="nav-item"><a class="nav-link" href="#">MyCart</a></li>
         <li class="nav-item" *ngIf="isLoggedIn()"><a class="nav-link active" (click)="logoutUser()" routerLink="/" routerLinkActive="active-link">Logout</a></li>

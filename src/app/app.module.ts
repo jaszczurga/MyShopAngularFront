@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,7 +7,14 @@ import { AppComponent } from './app.component';
 import { ProductCategoryOffCanvaComponent } from './components/product-category-off-canva/product-category-off-canva.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { ProductComponent } from './components/product/product.component';
-import {RouterModule, Routes} from "@angular/router";
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateFn, Router,
+  RouterModule,
+  RouterStateSnapshot,
+  Routes, UrlTree
+} from "@angular/router";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MyProductsComponent } from './components/my-products/my-products.component';
@@ -32,25 +39,66 @@ import {JwtInterceptor} from "./configuration/jwt-interceptor";
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import {RoleGuardService} from "./services/role-guard-service";
+import {JWT_OPTIONS, JwtHelperService, JwtModule} from "@auth0/angular-jwt";
+import {CookieService} from "ngx-cookie-service";
+import {Observable} from "rxjs";
+import {AuthenticationService} from "./services/authentication.service";
 
 
 
+export function jwtOptionsFactory(cookieService: CookieService){
+  return {
+    tokenGetter: () => {
+      return cookieService.get('jwtToken');
+    },
+    allowedDomains: ["localhost:8080"],
+    disallowedRoutes: ["http://localhost:8080/api/v1/auth/authenticate"]
+  }
+}
+export const AdminGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+  const authService = inject(AuthenticationService);
+  const jwtHelper = inject(JwtHelperService);
+  const router = inject(Router);
+  const loggedIn = authService.isLoggedIn();
+  if (!loggedIn) {
+    return router.createUrlTree(['/auth/login']);
+  }
+  const token = authService.getJwtToken();
+  const decodedToken = jwtHelper.decodeToken(token);
+  const roles = decodedToken.roles || '';
+  return roles.includes('ADMIN')
+    ? true
+    : router.createUrlTree(['/auth/login']);
+};
 
+export const UserGuard: CanActivateFn = (
+): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+  const authService = inject(AuthenticationService);
+  const router = inject(Router);
+  const loggedIn = authService.isLoggedIn();
+  if (!loggedIn) {
+    return router.createUrlTree(['/auth/login']);
+  }
+  return true;
+}
 
 const routes: Routes = [
-  {path: 'orders', component: OrdersComponent},
+  {path: 'orders' ,component: OrdersComponent, canActivate: [UserGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
-  {path: 'image-manager', component: ImageManagerComponent},
   {path: 'products', component: ProductComponent},
   {path: 'products/:id', component: ProductContentDetailsComponent},
   {path: 'category', component: ProductComponent},
   {path: 'search/:keyword', component: ProductComponent},
   {path: 'category/:id', component: ProductComponent},
-  {path: 'my-products', component: MyProductsComponent},
-  {path: 'my-products/:id', component: MyProductsMoreInfoAboutCategoryComponent},
+  {path: 'my-products', component: MyProductsComponent, canActivate: [AdminGuard]},
+  {path: 'my-products/:id', component: MyProductsMoreInfoAboutCategoryComponent, canActivate: [AdminGuard]},
   {path: '', redirectTo: '/products', pathMatch: 'full'},
   {path: '**', redirectTo: '/products', pathMatch: 'full'},
 ];
@@ -75,6 +123,7 @@ const routes: Routes = [
     OrdersComponent,
   ],
   imports: [
+    JwtModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -92,8 +141,11 @@ const routes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
+    JwtHelperService,
+    CookieService,
     provideAnimationsAsync('noop'),
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: JWT_OPTIONS, useFactory: jwtOptionsFactory, deps: [CookieService]},
   ],
   bootstrap: [AppComponent]
 })
