@@ -1,11 +1,11 @@
 <div class="row gx-2 gy-4 text-start row-cols-md-3 row-cols-xl-5 row-cols-sm-2 row-cols-1 row-cols-xxl-5">
   <div  *ngFor="let tempProduct of products"  class="col" routerLink="/products/{{tempProduct.id}}" routerLinkActive="active-link">
     <div class="card">
-      <img class="card-img-top w-100  d-block fit-cover" style="height: 200px" [src]=" 'data:'+tempProduct.images?.at(0)?.type+';base64,'+tempProduct.images?.at(0)?.picByte">
-      <div class="card-body p-4" style="height: 150px;overflow: hidden">
+      <img class="card-img-top  d-block fit-cover" style="height: 170px" [src]=" 'data:'+tempProduct.images?.at(0)?.type+';base64,'+tempProduct.images?.at(0)?.picByte">
+      <div class="card-body p-4" style="height: 190px;overflow: hidden">
         <h4 class="card-title">{{tempProduct.productName}}</h4>
-        <h6 class="card-text">{{tempProduct.id}}</h6>
-        <p class="card-text">{{tempProduct.productDescription}} ...</p>
+        <p class="card-text">{{tempProduct.productDescription | slice:0:60}}...</p>
+        <p>{{tempProduct.productPrice | currency:"PLN"}}</p>
       </div>
     </div>
   </div>

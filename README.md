@@ -1,27 +1,36 @@
-# MyShopAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
 
-## Development server
+# MyShop
+Project in Angular which uses [MyShop API](https://github.com/jaszczurga/MyShopBackend) created in Spring Boot. This project is a simple e-commerce website where users can view products, add them to cart and place orders. Admin can add, update and delete products. Admin can also view orders placed by users.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Key Features:
+* The platform boasts an intuitive and visually appealing user interface, ensuring a smooth navigation experience for customers.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![image](PagePhotos/page/mainPageWithCars.png)
 
-## Build
+* Users can explore a wide range of products conveniently categorized for easy browsing. Each product is presented with description and images.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+![image](PagePhotos/page/mainPageCategories.png)
+![image](PagePhotos/page/searchForMercedes.png)
 
-## Running unit tests
+* Customers can add desired items to their shopping cart with a single click. The cart dynamically updates to display the added products, allowing users to review their selections before proceeding to checkout.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![image](PagePhotos/page/ProductDetailsRubicon.png)
 
-## Running end-to-end tests
+![image](PagePhotos/page/cartDetails.png)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+* Administrators have access to a comprehensive dashboard that empowers them to manage the platform efficiently. From the dashboard, admins can perform actions such as adding new products, updating existing ones, and removing outdated items from the catalog.
 
-## Further help
+![image](PagePhotos/page/CategoryManager.png)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![image](PagePhotos/page/ProductManager.png)
+
+* Payments are powered by well known payment provider Stripe
+
+![image](PagePhotos/page/checkoutStripePay2.png)
+
+* Users can see their order history and Admin can see all active orders in progress
+
+![image](PagePhotos/page/ordersScreem.png)
+
