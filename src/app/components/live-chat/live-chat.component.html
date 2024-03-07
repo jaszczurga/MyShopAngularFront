@@ -1,23 +1,32 @@
+<!--<div>-->
+<!--<div class="chat-container">-->
+<!--  <div class="messages">-->
+<!--    <h2>Messages from Manager</h2>-->
+<!--    <div *ngFor="let msg of messagesFromManager">-->
+<!--      <p><strong>{{msg.content}}:</strong> {{msg.content}}</p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="messages">-->
+<!--    <h2>Messages from Customer</h2>-->
+<!--    <div *ngFor="let msg of messagesFromCustomer">-->
+<!--      <p><strong>{{msg.content}}:</strong> {{msg.content}}</p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="send-message">-->
+<!--    <input [(ngModel)]="message" placeholder="Type your message here...">-->
+<!--    <button (click)="sendMessageToManager()">Send to Manager</button>-->
+<!--    <button (click)="sendMessageToCustomer()">Send to Customer</button>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
 <div>
-<div class="chat-container">
-  <div class="messages">
-    <h2>Messages from Manager</h2>
-    <div *ngFor="let msg of messagesFromManager">
-      <p><strong>{{msg.content}}:</strong> {{msg.content}}</p>
-    </div>
-  </div>
-
-  <div class="messages">
-    <h2>Messages from Customer</h2>
-    <div *ngFor="let msg of messagesFromCustomer">
-      <p><strong>{{msg.content}}:</strong> {{msg.content}}</p>
-    </div>
-  </div>
-
-  <div class="send-message">
-    <input [(ngModel)]="message" placeholder="Type your message here...">
-    <button (click)="sendMessageToManager()">Send to Manager</button>
-    <button (click)="sendMessageToCustomer()">Send to Customer</button>
+<input class="form-control" type="text" placeholder="message" [(ngModel)]="message">
+<button class="btn btn-success" (click)="sendMessage()">Send</button>
+<div class="content">
+  <div *ngFor="let msg of liveChatService.msg" style="color: white;">
+    {{msg}}
   </div>
 </div>
 </div>
