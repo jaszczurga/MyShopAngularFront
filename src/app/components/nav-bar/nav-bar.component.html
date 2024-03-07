@@ -18,6 +18,8 @@
         <li class="nav-item" *ngIf="roles.includes('ADMIN') || roles.includes('USER')"><a class="nav-link active" routerLink="/orders" routerLinkActive="active-link">Orders</a></li>
         <li class="nav-item" *ngIf="isLoggedIn()"><a class="nav-link active" (click)="logoutUser()" routerLink="/" routerLinkActive="active-link">Logout</a></li>
         <li class="nav-item" *ngIf="!isLoggedIn()"><a class="nav-link active" routerLink="/login" routerLinkActive="active-link">Login</a></li>
+        <li class="nav-item"><a class="nav-link active" routerLink="/live-chat" routerLinkActive="active-link">chat</a></li>
+
       </ul>
     </div>
   </div>

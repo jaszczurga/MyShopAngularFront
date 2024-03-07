@@ -23,9 +23,12 @@
     "@auth0/angular-jwt": "^5.2.0",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@popperjs/core": "^2.11.8",
+    "@stomp/rx-stomp": "^2.0.0",
     "bootstrap": "^5.3.2",
     "ngx-cookie-service": "^17.1.0",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.7.4",
+    "sockjs": "^0.3.24",
     "stripe": "^14.16.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

@@ -44,6 +44,7 @@ import {JWT_OPTIONS, JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 import {CookieService} from "ngx-cookie-service";
 import {Observable} from "rxjs";
 import {AuthenticationService} from "./services/authentication.service";
+import { LiveChatComponent } from './components/live-chat/live-chat.component';
 
 
 
@@ -87,6 +88,7 @@ export const UserGuard: CanActivateFn = (
 }
 
 const routes: Routes = [
+  {path: 'live-chat', component: LiveChatComponent},
   {path: 'orders' ,component: OrdersComponent, canActivate: [UserGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -121,6 +123,7 @@ const routes: Routes = [
     RegisterComponent,
     LoginComponent,
     OrdersComponent,
+    LiveChatComponent,
   ],
   imports: [
     JwtModule,

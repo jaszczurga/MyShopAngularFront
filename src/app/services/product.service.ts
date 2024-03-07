@@ -12,8 +12,6 @@ import {CategoryDto} from "../dto/category-dto";
 })
 export class ProductService{
 
-  categoryUrl = environment.springBootApiUrlhttp + "/productCategories";
-  productUrl = environment.springBootApiUrlhttp + "/products";
   actionApiUrl = environment.springBootApiUrlhttp + "/action";
 
   ListOfRecentProducts: Subject<Product[]> = new BehaviorSubject<Product[]>([]);
