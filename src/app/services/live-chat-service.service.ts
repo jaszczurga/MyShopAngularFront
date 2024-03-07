@@ -10,7 +10,8 @@ declare var Stomp: any;
 export class LiveChatServiceService {
 
   public stompClient: any;
-  public msg :String[] = ["dwadawd","dwda"];
+  public msgManager :String[] = [];
+  public msgCustomer :String[] = [];
   cookieService: CookieService;
 
 
@@ -29,14 +30,24 @@ export class LiveChatServiceService {
         if (message) {
           console.log("wiadomosc dodawana do listy:")
           console.log(JSON.parse(message.body).content);
-          that.msg.push(JSON.parse(message.body).content);
+          that.msgCustomer.push(JSON.parse(message.body).content);
+        }
+      });
+      that.stompClient.subscribe('/user/topic/messages-from-customers', (message:any) => {
+        if (message) {
+          console.log("wiadomosc dodawana do listy:")
+          console.log(JSON.parse(message.body).content);
+          that.msgManager.push(JSON.parse(message.body).content);
         }
       });
     });
   }
 
-  sendMessage(message: any) {
+  sendMessageToCustomer(message: any) {
     this.stompClient.send('/ws/send-message-to-customer', {}, JSON.stringify(message));
+  }
+  sendMessageToManager(message: any) {
+    this.stompClient.send('/ws/send-message-to-shop-manager', {}, JSON.stringify(message));
   }
 
 }

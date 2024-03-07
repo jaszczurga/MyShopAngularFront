@@ -11,20 +11,31 @@ import {LiveChatServiceService} from "../../services/live-chat-service.service";
 export class LiveChatComponent implements OnInit {
   messagesFromManager: {content:String}[] = [];
   messagesFromCustomer: {content:String}[] = [];
-  message : string = "";
+  messageManager : string = "";
+  messageCustomer : string = "";
   liveChatService: LiveChatServiceService;
   constructor(liveChatService: LiveChatServiceService) {
     this.liveChatService = liveChatService;
   }
 
-  sendMessage(){
-    if(this.message.length > 0){
-      this.liveChatService.sendMessage({
+  sendMessageToCustomer(){
+    if(this.messageManager.length > 0){
+      this.liveChatService.sendMessageToCustomer({
         receiverId: 3,
-        content: this.message,
+        content: this.messageManager,
         senderId: 3
       });
-      this.message = "";
+      this.messageManager = "";
+    }
+  }
+
+  sendMessageToManager(){
+    if(this.messageCustomer.length > 0){
+      this.liveChatService.sendMessageToManager({
+        content: this.messageCustomer,
+        senderId: 3
+      });
+      this.messageCustomer = "";
     }
   }
 

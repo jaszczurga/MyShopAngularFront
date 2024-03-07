@@ -22,10 +22,21 @@
 <!--</div>-->
 <!--</div>-->
 <div>
-<input class="form-control" type="text" placeholder="message" [(ngModel)]="message">
-<button class="btn btn-success" (click)="sendMessage()">Send</button>
+  <h1 style="color: white">messages to customer</h1>
+<input class="form-control" type="text" placeholder="message" [(ngModel)]="messageManager">
+<button class="btn btn-success" (click)="sendMessageToCustomer()">Send</button>
+
+<h1 style="color: white">messages to manager</h1>
+  <input class="form-control" type="text" placeholder="message" [(ngModel)]="messageCustomer">
+  <button class="btn btn-success" (click)="sendMessageToManager()">Send</button>
 <div class="content">
-  <div *ngFor="let msg of liveChatService.msg" style="color: white;">
+  <h1 style="color: white">customer messages</h1>
+  <div *ngFor="let msg of liveChatService.msgCustomer" style="color: white;">
+    {{msg}}
+  </div>
+  <br>
+  <h1 style="color: white">manager messages</h1>
+  <div *ngFor="let msg of liveChatService.msgManager" style="color: white;">
     {{msg}}
   </div>
 </div>
