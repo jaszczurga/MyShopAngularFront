@@ -13,16 +13,15 @@ import {Customer} from "../../common/customer";
 export class LiveChatComponent implements OnInit {
 
   message:String = "";
-  liveChatService: LiveChatServiceService;
-  chosenCustomerId: number = 3;
+  chosenCustomerId: number = 2;
 
   customers: Customer[] = [];
 
 
 
-  constructor(liveChatService: LiveChatServiceService) {
-    this.liveChatService = liveChatService;
+  constructor(protected liveChatService: LiveChatServiceService,private authenticationService: AuthenticationService) {
     this.liveChatService.getMessagesHistory(this.chosenCustomerId);
+    this.authenticationService.getCurrentUserRolesRequest();
   }
 
   sendMessageToCustomer(){

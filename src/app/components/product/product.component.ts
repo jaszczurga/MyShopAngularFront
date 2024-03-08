@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ImageService} from "../../services/image.service";
 import {CartItem} from "../../common/cart-item";
 import {CartService} from "../../services/cart.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-product',
@@ -29,8 +30,7 @@ export class ProductComponent implements OnInit{
 
     constructor(private productService: ProductService,
                 private route:ActivatedRoute,
-                private imageService: ImageService,
-                private cartService: CartService) {
+                private imageService: ImageService) {
     }
 
 
@@ -43,18 +43,6 @@ export class ProductComponent implements OnInit{
 
   }
 
-
-  //get list of images for current list of products asynchronously
-  // listImagesForProducts() {
-  //   for (let product of this.products) {
-  //     this.imageService.getImagesOfProduct(product.id).subscribe(
-  //       data => {
-  //         this.products.find(p => p.id === product.id)!.setImages(data);
-  //       }
-  //     );
-  //   }
-  // }
-  //
   images: any[] = [];
   listImagesForProduct(id: number = 82) {
     this.imageService.getImagesOfProduct(id).subscribe(

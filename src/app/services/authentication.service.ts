@@ -13,6 +13,7 @@ export class AuthenticationService implements OnInit{
 
   //create role list for current user subscribable for components
   CurrentUserRoles: Subject<string | null> = new BehaviorSubject<string | null>(null);
+  CurrentUserId: Subject<string> = new BehaviorSubject<string>("2");
 
 
 
@@ -23,6 +24,7 @@ export class AuthenticationService implements OnInit{
 
   ngOnInit(): void {
     this.getCurrentUserRolesRequest();
+    this.getCurrentUserId();
   }
 
 
@@ -77,6 +79,17 @@ export class AuthenticationService implements OnInit{
       this.CurrentUserRoles.next(data.rolesString);
     });
   }
+
+  //get current user id
+  getCurrentUserId(){
+    //send the request to the backend
+    let respone = this.httpClient.get<{"id":number}>("http://localhost:8080/api/v1/auth/currentUserId");
+    respone.subscribe(data => {
+      this.CurrentUserId.next(data.id.toString());
+    });
+
+  }
+
 
   isLoggedIn() {
     if(this.cookieService.get('jwtToken') !== '' && !this.jwtHelper.isTokenExpired(this.cookieService.get('jwtToken'))){

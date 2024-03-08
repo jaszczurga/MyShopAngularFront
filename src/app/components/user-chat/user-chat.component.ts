@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LiveChatServiceService} from "../../services/live-chat-service.service";
 import {Customer} from "../../common/customer";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-user-chat',
@@ -10,16 +11,12 @@ import {Customer} from "../../common/customer";
 export class UserChatComponent implements OnInit {
 
   message:String = "";
-  liveChatService: LiveChatServiceService;
-  chosenCustomerId: number = 3;
 
-  customers: Customer[] = [];
+  chosenCustomerId: number= 2;
 
   showChat = false;
 
-  constructor(liveChatService: LiveChatServiceService) {
-    this.liveChatService = liveChatService;
-    this.liveChatService.getMessagesHistory(this.chosenCustomerId);
+  constructor(protected liveChatService: LiveChatServiceService, private authenticationService: AuthenticationService) {
   }
 
   sendMessageToManager(){
@@ -34,9 +31,13 @@ export class UserChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.liveChatService.Customers.subscribe(
+
+    this.authenticationService.getCurrentUserRolesRequest();
+    this.authenticationService.getCurrentUserId();
+    this.authenticationService.CurrentUserId.subscribe(
       data => {
-        this.customers = data;
+        this.chosenCustomerId = parseInt(data);
+        this.liveChatService.getMessagesHistory(this.chosenCustomerId);
       }
     );
   }
