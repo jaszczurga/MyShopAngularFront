@@ -73,10 +73,12 @@ getMessagesHistory(customerId: number){
   }
 
   sendMessageToCustomer(message: any) {
+    this.messageHistory.push(message);
     //save message to db
     this.stompClient.send('/ws/send-message-to-customer', {}, JSON.stringify(message));
   }
   sendMessageToManager(message: any) {
+    this.messageHistory.push(message);
     this.stompClient.send('/ws/send-message-to-shop-manager', {}, JSON.stringify(message));
   }
 

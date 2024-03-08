@@ -11,11 +11,7 @@ import {Customer} from "../../common/customer";
   styleUrls: ['./live-chat.component.css']
 })
 export class LiveChatComponent implements OnInit {
-  messagesFromManager: {content:String}[] = [];
-  messagesFromCustomer: {content:String}[] = [];
-  messagesHistory: String[] = [];
-  messageManager : string = "";
-  messageCustomer : string = "";
+
   message:String = "";
   liveChatService: LiveChatServiceService;
   chosenCustomerId: number = 3;

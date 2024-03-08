@@ -20,45 +20,61 @@
 
 
           <div *ngIf="liveChatService.roles == 'ADMIN'">
-            <h5 class="card-title">Manager Chat with customers</h5>
             <div class="row">
               <div class="col-md-12">
-                <h6>Chat Messages</h6>
-                <div class="d-flex flex-column">
-                  <div class="card mb-2" *ngFor="let msg of liveChatService.messageHistory"
-                       [ngClass]="{'align-self-end': msg.senderId != '1', 'align-self-start': msg.senderId == '1'}"
-                       style="border-radius: 20px; padding: 5px; background-color: msg.sender === 'manager' ? '#d0d0d0' : '#f0f0f0'; width: fit-content; word-wrap: break-word; max-width: 200px;">
-                    <div class="card-body" style="padding: 0;">
-                      {{msg.content}}
+
+                <div class="scrollable-div d-flex flex-column">
+                  <div class="d-flex flex-column">
+                    <div class="card mb-2" *ngFor="let msg of liveChatService.messageHistory"
+                         [ngClass]="{'align-self-end': msg.senderId == '1', 'align-self-start': msg.senderId != '1'}">
+                      <div class="card-body" style="padding: 0">
+                        {{msg.content}}
+                      </div>
                     </div>
                   </div>
+
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col">
+                  <input class="form-control" type="text" placeholder="message" [(ngModel)]="message">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-success" (click)="sendMessageToCustomer()">Send</button>
                 </div>
               </div>
             </div>
-            <input class="form-control mt-2" type="text" placeholder="message" [(ngModel)]="message">
-            <button class="btn btn-success mt-2" (click)="sendMessageToCustomer()">Send</button>
           </div>
+
+
+
 
           <div *ngIf="liveChatService.roles == 'USER'">
-            <h5 class="card-title">Manager Chat with customers</h5>
             <div class="row">
               <div class="col-md-12">
-                <h6>Chat Messages</h6>
+
+                <div class="scrollable-div d-flex flex-column">
                 <div class="d-flex flex-column">
                   <div class="card mb-2" *ngFor="let msg of liveChatService.messageHistory"
-                       [ngClass]="{'align-self-end': msg.senderId != '1', 'align-self-start': msg.senderId == '1'}"
-                       style="border-radius: 20px; padding: 5px; background-color: msg.sender === 'manager' ? '#d0d0d0' : '#f0f0f0'; width: fit-content; word-wrap: break-word; max-width: 200px;">
-                    <div class="card-body" style="padding: 0;">
+                       [ngClass]="{'align-self-end': msg.senderId != '1', 'align-self-start': msg.senderId == '1'}">
+                    <div class="card-body" style="padding: 0">
                       {{msg.content}}
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
-            <input class="form-control mt-2" type="text" placeholder="message" [(ngModel)]="message">
-            <button class="btn btn-success mt-2" (click)="sendMessageToManager()">Send</button>
+              <div class="row mt-2">
+                <div class="col">
+                  <input class="form-control" type="text" placeholder="message" [(ngModel)]="message">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-success" (click)="sendMessageToManager()">Send</button>
+                </div>
+              </div>
           </div>
-
+          </div>
 
         </div>
       </div>

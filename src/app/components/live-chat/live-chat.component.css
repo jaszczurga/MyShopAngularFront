@@ -5,3 +5,60 @@
 .selected {
   background-color: #5cab6f;
 }
+
+.scrollable-div {
+  max-height: 50vh; /* Adjust this value as needed */
+  overflow-y: auto;
+}
+
+.container {
+  border-radius: 5px;
+}
+
+.col-md-4 {
+  background-color: #e9ecef;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.col-md-8 {
+  border-radius: 5px;
+}
+
+.list-group-item {
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #ced4da;
+}
+
+.card {
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  margin-top: 0;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.container {
+  border-radius: 5px;
+  padding-top: 10px;
+  margin-top: 0;
+}
