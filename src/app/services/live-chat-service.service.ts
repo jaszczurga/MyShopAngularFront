@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
+import {AuthenticationService} from "./authentication.service";
 
 declare var SockJS: any;
 declare var Stomp: any;
@@ -12,11 +13,15 @@ export class LiveChatServiceService {
   public stompClient: any;
   public msgManager :String[] = [];
   public msgCustomer :String[] = [];
+  public roles: string = 'USER';
   cookieService: CookieService;
+  authenticationService: AuthenticationService;
 
 
-  constructor(cookieService: CookieService) {
+  constructor(cookieService: CookieService,authenticationService: AuthenticationService) {
     this.cookieService = cookieService;
+    this.authenticationService = authenticationService;
+    this.roles = this.authenticationService.decodeJwtToken().roles;
     this.initializeWebSocketConnection();
   }
 

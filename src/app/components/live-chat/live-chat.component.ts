@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Message} from "../../common/message";
 import {LiveChatServiceService} from "../../services/live-chat-service.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 @Component({
@@ -14,6 +15,7 @@ export class LiveChatComponent implements OnInit {
   messageManager : string = "";
   messageCustomer : string = "";
   liveChatService: LiveChatServiceService;
+
   constructor(liveChatService: LiveChatServiceService) {
     this.liveChatService = liveChatService;
   }
@@ -28,6 +30,8 @@ export class LiveChatComponent implements OnInit {
       this.messageManager = "";
     }
   }
+
+
 
   sendMessageToManager(){
     if(this.messageCustomer.length > 0){

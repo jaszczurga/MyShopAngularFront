@@ -22,22 +22,25 @@
 <!--</div>-->
 <!--</div>-->
 <div>
-  <h1 style="color: white">messages to customer</h1>
+  <div *ngIf="liveChatService.roles == 'ADMIN'">
+  <h1 style="color: white">Manager Chat with customers</h1>
 <input class="form-control" type="text" placeholder="message" [(ngModel)]="messageManager">
 <button class="btn btn-success" (click)="sendMessageToCustomer()">Send</button>
+    <div *ngFor="let msg of liveChatService.msgManager" style="color: white;">
+      {{msg}}
+    </div>
+  </div>
 
-<h1 style="color: white">messages to manager</h1>
+
+<div *ngIf="liveChatService.roles == 'USER'">
+<h1 style="color: white">Customer chat with manager</h1>
   <input class="form-control" type="text" placeholder="message" [(ngModel)]="messageCustomer">
   <button class="btn btn-success" (click)="sendMessageToManager()">Send</button>
 <div class="content">
-  <h1 style="color: white">customer messages</h1>
   <div *ngFor="let msg of liveChatService.msgCustomer" style="color: white;">
     {{msg}}
   </div>
-  <br>
-  <h1 style="color: white">manager messages</h1>
-  <div *ngFor="let msg of liveChatService.msgManager" style="color: white;">
-    {{msg}}
-  </div>
+</div>
+
 </div>
 </div>

@@ -25,6 +25,14 @@ export class AuthenticationService implements OnInit{
     this.getCurrentUserRolesRequest();
   }
 
+
+  decodeJwtToken() {
+    const token = this.getJwtToken();
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken;
+  }
+
+
   //register new user to the backend
 
   registerNewUser(username: string, email: string, password: string, confirmPassword: string) {
