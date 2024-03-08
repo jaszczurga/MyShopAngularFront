@@ -25,7 +25,7 @@ export class LiveChatServiceService {
               private http: HttpClient
   ) {
     this.roles = this.authenticationService.decodeJwtToken().roles;
-    this.initializeWebSocketConnection();
+    //this.initializeWebSocketConnection();
     this.getCustomers();
   }
 
@@ -41,7 +41,7 @@ export class LiveChatServiceService {
 
   //get all messages for chosen customer his id from manager panel
 getMessagesHistory(customerId: number){
-  this.http.get<{ conversationId: number, user1: any, user2: any, messages: Message[] }>(`http://localhost:8080/api/users/conversationByUserId?userId=${customerId}&pageNumberOfMessages=0&pageSizeOfMessages=20`).subscribe(
+  this.http.get<{ conversationId: number, user1: any, user2: any, messages: Message[] }>(`http://localhost:8080/api/users/conversationByUserId?userId=${customerId}&pageNumberOfMessages=0&pageSizeOfMessages=200`).subscribe(
     data => {
       console.log(data.messages);
       this.messageHistory = data.messages;
@@ -51,7 +51,7 @@ getMessagesHistory(customerId: number){
 
 
 
-  initializeWebSocketConnection() {
+  initializeWebSocketConnection(chatId?: number) {
     const serverUrl = 'http://localhost:8080/socket?token=Bearer '+ this.cookieService.get('jwtToken');
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
@@ -65,11 +65,20 @@ getMessagesHistory(customerId: number){
       });
       that.stompClient.subscribe('/user/topic/messages-from-customers', (message:any) => {
         if (message ) {
-
-          that.messageHistory.push(JSON.parse(message.body));
+          console.log(JSON.parse(message.body));
+          console.log(chatId);
+          if(JSON.parse(message.body).senderId === String(chatId)){
+            console.log('message from customer passss');
+            that.messageHistory.push(JSON.parse(message.body));
+          }
         }
       });
     });
+  }
+  disconnectWebSocketConnection() {
+    if (this.stompClient) {
+      this.stompClient.disconnect();
+    }
   }
 
   sendMessageToCustomer(message: any) {

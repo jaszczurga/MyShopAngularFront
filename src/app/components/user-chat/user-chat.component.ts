@@ -40,6 +40,9 @@ export class UserChatComponent implements OnInit {
         this.liveChatService.getMessagesHistory(this.chosenCustomerId);
       }
     );
+    if(this.authenticationService.decodeJwtToken().roles === 'USER') {
+      this.liveChatService.initializeWebSocketConnection();
+    }
   }
 
 }

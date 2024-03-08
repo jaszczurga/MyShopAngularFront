@@ -43,11 +43,15 @@ export class LiveChatComponent implements OnInit {
           this.customers = data;
         }
       );
+      this.liveChatService.disconnectWebSocketConnection();
+      this.liveChatService.initializeWebSocketConnection(this.chosenCustomerId);
 }
 
 
   selectedUser(id: number | undefined) {
     this.chosenCustomerId = id || 3;
     this.liveChatService.getMessagesHistory(this.chosenCustomerId);
+    this.liveChatService.disconnectWebSocketConnection();
+    this.liveChatService.initializeWebSocketConnection(this.chosenCustomerId);
   }
 }
