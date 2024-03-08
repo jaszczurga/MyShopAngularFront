@@ -64,7 +64,7 @@ getMessagesHistory(customerId: number){
         }
       });
       that.stompClient.subscribe('/user/topic/messages-from-customers', (message:any) => {
-        if (message) {
+        if (message ) {
 
           that.messageHistory.push(JSON.parse(message.body));
         }

@@ -37,17 +37,6 @@ export class LiveChatComponent implements OnInit {
 
 
 
-  sendMessageToManager(){
-    if(this.message.length > 0){
-      this.liveChatService.sendMessageToManager({
-        receiverId: null,
-        content: this.message,
-        senderId: this.chosenCustomerId
-      });
-      this.message = "";
-    }
-  }
-
   ngOnInit(): void {
       this.liveChatService.Customers.subscribe(
         data => {
