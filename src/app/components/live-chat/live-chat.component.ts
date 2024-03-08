@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Message} from "../../common/message";
 import {LiveChatServiceService} from "../../services/live-chat-service.service";
 import {AuthenticationService} from "../../services/authentication.service";
+import {Customer} from "../../common/customer";
 
 
 @Component({
@@ -12,9 +13,14 @@ import {AuthenticationService} from "../../services/authentication.service";
 export class LiveChatComponent implements OnInit {
   messagesFromManager: {content:String}[] = [];
   messagesFromCustomer: {content:String}[] = [];
+  messagesHistory: String[] = [];
   messageManager : string = "";
   messageCustomer : string = "";
   liveChatService: LiveChatServiceService;
+
+  customers: Customer[] = [];
+
+
 
   constructor(liveChatService: LiveChatServiceService) {
     this.liveChatService = liveChatService;
@@ -44,26 +50,12 @@ export class LiveChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      this.liveChatService.Customers.subscribe(
+        data => {
+          this.customers = data;
+        }
+      );
+}
 
 
-
-
-    // this.liveChatService.getMessagesFromManager().subscribe(data => {
-    //   this.messagesFromManager.push(data);
-    // });
-    //
-    // this.liveChatService.getMessagesFromCustomer().subscribe(data => {
-    //   this.messagesFromCustomer.push(data);
-    // });
-  }
-
-  // sendMessageToManager() {
-  //   const message = new Message(this.message, 'managerId', 'customerId');
-  //   this.liveChatService.sendMessageToManager(message);
-  // }
-  //
-  // sendMessageToCustomer() {
-  //   const message = new Message(this.message, "3", "3");
-  //   this.liveChatService.sendMessageToCustomer(message);
-  // }
 }

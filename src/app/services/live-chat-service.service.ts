@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {AuthenticationService} from "./authentication.service";
+import {Customer} from "../common/customer";
+import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, Subject} from "rxjs";
+import {ProductCategory} from "../common/product-category";
 
 declare var SockJS: any;
 declare var Stomp: any;
@@ -14,16 +18,28 @@ export class LiveChatServiceService {
   public msgManager :String[] = [];
   public msgCustomer :String[] = [];
   public roles: string = 'USER';
-  cookieService: CookieService;
-  authenticationService: AuthenticationService;
+  Customers: Subject<Customer[]> = new BehaviorSubject<Customer[]>([]);
 
-
-  constructor(cookieService: CookieService,authenticationService: AuthenticationService) {
-    this.cookieService = cookieService;
-    this.authenticationService = authenticationService;
+  constructor(private cookieService: CookieService,
+              private authenticationService: AuthenticationService,
+              private http: HttpClient
+  ) {
     this.roles = this.authenticationService.decodeJwtToken().roles;
     this.initializeWebSocketConnection();
+    this.getCustomers();
   }
+
+
+  getCustomers(pageOfUsers: number = 0, numberOfUsers: number = 10){
+    this.http.get<{ "list" : Customer[] }>(`http://localhost:8080/api/users/allUsers?pageOfUsers=${pageOfUsers}&numberOfUsers=${numberOfUsers}`).subscribe(
+      data => {
+        console.log(data.list);
+        this.Customers.next(data.list);
+      }
+    )
+  }
+
+
 
   initializeWebSocketConnection() {
     const serverUrl = 'http://localhost:8080/socket?token=Bearer '+ this.cookieService.get('jwtToken');
@@ -58,42 +74,6 @@ export class LiveChatServiceService {
 }
 
 
-
-
-  // constructor(private cookieService: CookieService) { }
-  // //token to url
-  // private jwtToken = "?token=Bearer "+this.cookieService.get('jwtToken');
-  //
-  // private socket = io('http://localhost:8080');
-  //
-  //
-  // sendMessageToManager(message: Message){
-  //   this.socket.emit('/ws/send-message-to-shop-manager', message);
-  // }
-  //
-  // sendMessageToCustomer(message: Message){
-  //   this.socket.emit('/ws/send-message-to-customer', message);
-  // }
-  //
-  // getMessagesFromManager() {
-  //   let observable = new Observable<{content:String}>(observer => {
-  //     this.socket.on('/topic/messages-from-manager', (data) => {
-  //       observer.next(data);
-  //     });
-  //     return () => { this.socket.disconnect(); };
-  //   });
-  //   return observable;
-  // }
-  //
-  // getMessagesFromCustomer() {
-  //   let observable = new Observable<{content:String}>(observer => {
-  //     this.socket.on('/topic/messages-from-customers', (data) => {
-  //       observer.next(data);
-  //     });
-  //     return () => { this.socket.disconnect(); };
-  //   });
-  //   return observable;
-  // }
 
 
 
