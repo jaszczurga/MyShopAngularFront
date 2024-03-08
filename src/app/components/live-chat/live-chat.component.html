@@ -46,36 +46,6 @@
             </div>
           </div>
 
-
-
-
-          <div *ngIf="liveChatService.roles == 'USER'">
-            <div class="row">
-              <div class="col-md-12">
-
-                <div class="scrollable-div d-flex flex-column">
-                <div class="d-flex flex-column">
-                  <div class="card mb-2" *ngFor="let msg of liveChatService.messageHistory"
-                       [ngClass]="{'align-self-end': msg.senderId != '1', 'align-self-start': msg.senderId == '1'}">
-                    <div class="card-body" style="padding: 0">
-                      {{msg.content}}
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-              <div class="row mt-2">
-                <div class="col">
-                  <input class="form-control" type="text" placeholder="message" [(ngModel)]="message">
-                </div>
-                <div class="col-auto">
-                  <button class="btn btn-success" (click)="sendMessageToManager()">Send</button>
-                </div>
-              </div>
-          </div>
-          </div>
-
         </div>
       </div>
     </div>

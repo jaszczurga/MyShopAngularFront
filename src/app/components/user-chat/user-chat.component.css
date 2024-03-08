@@ -1,0 +1,102 @@
+.chat-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  padding: 30px;
+  cursor: pointer;
+  font-size: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.chat-icon:hover {
+  transform: scale(1.1);
+}
+.card-header{
+  background-color: #007bff;
+  color: white;
+}
+
+.chat-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  background-color: white;
+  display: none;
+}
+
+.show-chat {
+  display: block;
+  background-color: #212529;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #999;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+
+
+input.form-control {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+button.btn.btn-success {
+  border-radius: 20px;
+  padding: 5px 20px;
+}
+.card.mb-2 {
+  border-radius: 20px; /* Increase this value to make the cards more rounded */
+}
+
+/* Add this class to fix the input and button to the bottom */
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Adjust the close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px; /* Adjust the font size */
+  cursor: pointer;
+  color: #999;
+}
+.scrollable-div {
+  max-height: 400px; /* Set the maximum height as per your requirement */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.col-md-12 {
+  padding: 0;
+}
+
+.container {
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}

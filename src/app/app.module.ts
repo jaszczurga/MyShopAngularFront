@@ -45,6 +45,7 @@ import {CookieService} from "ngx-cookie-service";
 import {Observable} from "rxjs";
 import {AuthenticationService} from "./services/authentication.service";
 import { LiveChatComponent } from './components/live-chat/live-chat.component';
+import { UserChatComponent } from './components/user-chat/user-chat.component';
 
 
 
@@ -124,6 +125,7 @@ const routes: Routes = [
     LoginComponent,
     OrdersComponent,
     LiveChatComponent,
+    UserChatComponent,
   ],
   imports: [
     JwtModule,

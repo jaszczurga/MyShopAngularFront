@@ -1,0 +1,52 @@
+<div class="chat-icon" (click)="showChat = !showChat">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+    <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"/>
+  </svg>
+</div>
+
+<!-- Chat Container -->
+<div class="chat-container" [ngClass]="{'show-chat': showChat}">
+  <div class="container">
+    <button class="close-button" (click)="showChat = false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </button>
+    <div class="row">
+      <!-- Chat interface -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            Chat with Support
+          </div>
+          <div class="card-body">
+            <div *ngIf="liveChatService.roles == 'USER'">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="scrollable-div d-flex flex-column">
+                      <div class="card mb-2" *ngFor="let msg of liveChatService.messageHistory"
+                           [ngClass]="{'align-self-end': msg.senderId != '1', 'align-self-start': msg.senderId == '1'}">
+                        <div class="card-body" style="max-width: 20ch; word-wrap: break-word; overflow-wrap: break-word;">
+                          {{msg.content}}
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <input class="form-control" type="text" placeholder="message" [(ngModel)]="message">
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-success" (click)="sendMessageToManager()">Send</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
