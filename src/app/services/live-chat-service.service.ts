@@ -5,6 +5,7 @@ import {Customer} from "../common/customer";
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Subject} from "rxjs";
 import {ProductCategory} from "../common/product-category";
+import {Message} from "../common/message";
 
 declare var SockJS: any;
 declare var Stomp: any;
@@ -15,9 +16,8 @@ declare var Stomp: any;
 export class LiveChatServiceService {
 
   public stompClient: any;
-  public msgManager :String[] = [];
-  public msgCustomer :String[] = [];
   public roles: string = 'USER';
+  public messageHistory: Message[] = [];
   Customers: Subject<Customer[]> = new BehaviorSubject<Customer[]>([]);
 
   constructor(private cookieService: CookieService,
@@ -39,6 +39,16 @@ export class LiveChatServiceService {
     )
   }
 
+  //get all messages for chosen customer his id from manager panel
+getMessagesHistory(customerId: number){
+  this.http.get<{ conversationId: number, user1: any, user2: any, messages: Message[] }>(`http://localhost:8080/api/users/conversationByUserId?userId=${customerId}&pageNumberOfMessages=0&pageSizeOfMessages=20`).subscribe(
+    data => {
+      console.log(data.messages);
+      this.messageHistory = data.messages;
+    }
+  )
+}
+
 
 
   initializeWebSocketConnection() {
@@ -49,22 +59,21 @@ export class LiveChatServiceService {
     this.stompClient.connect({}, function (frame: any) {
       that.stompClient.subscribe('/user/topic/messages-from-manager', (message:any) => {
         if (message) {
-          console.log("wiadomosc dodawana do listy:")
-          console.log(JSON.parse(message.body).content);
-          that.msgCustomer.push(JSON.parse(message.body).content);
+
+          that.messageHistory.push(JSON.parse(message.body));
         }
       });
       that.stompClient.subscribe('/user/topic/messages-from-customers', (message:any) => {
         if (message) {
-          console.log("wiadomosc dodawana do listy:")
-          console.log(JSON.parse(message.body).content);
-          that.msgManager.push(JSON.parse(message.body).content);
+
+          that.messageHistory.push(JSON.parse(message.body));
         }
       });
     });
   }
 
   sendMessageToCustomer(message: any) {
+    //save message to db
     this.stompClient.send('/ws/send-message-to-customer', {}, JSON.stringify(message));
   }
   sendMessageToManager(message: any) {

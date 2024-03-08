@@ -16,7 +16,9 @@ export class LiveChatComponent implements OnInit {
   messagesHistory: String[] = [];
   messageManager : string = "";
   messageCustomer : string = "";
+  message:String = "";
   liveChatService: LiveChatServiceService;
+  chosenCustomerId: number = 3;
 
   customers: Customer[] = [];
 
@@ -24,28 +26,30 @@ export class LiveChatComponent implements OnInit {
 
   constructor(liveChatService: LiveChatServiceService) {
     this.liveChatService = liveChatService;
+    this.liveChatService.getMessagesHistory(this.chosenCustomerId);
   }
 
   sendMessageToCustomer(){
-    if(this.messageManager.length > 0){
+    if(this.message.length > 0){
       this.liveChatService.sendMessageToCustomer({
-        receiverId: 3,
-        content: this.messageManager,
-        senderId: 3
+        receiverId: this.chosenCustomerId,
+        content: this.message,
+        senderId: 1
       });
-      this.messageManager = "";
+      this.message = "";
     }
   }
 
 
 
   sendMessageToManager(){
-    if(this.messageCustomer.length > 0){
+    if(this.message.length > 0){
       this.liveChatService.sendMessageToManager({
-        content: this.messageCustomer,
-        senderId: 3
+        receiverId: null,
+        content: this.message,
+        senderId: this.chosenCustomerId
       });
-      this.messageCustomer = "";
+      this.message = "";
     }
   }
 
@@ -58,4 +62,8 @@ export class LiveChatComponent implements OnInit {
 }
 
 
+  selectedUser(id: number | undefined) {
+    this.chosenCustomerId = id || 3;
+    this.liveChatService.getMessagesHistory(this.chosenCustomerId);
+  }
 }
