@@ -41,10 +41,17 @@ Website also provides live chat functionality for users to communicate with cust
 ```bash
 git clone 
 ```
+
+2. Install the dependencies
+```bash
+npm install
+```
+
 3. Run the application
 ```bash
-ng serve
+npm start
 ```
+
 
 
 ## Key Features:
