@@ -23,7 +23,7 @@
             <div class="row">
               <div class="col-md-12">
 
-                <div class="scrollable-div d-flex flex-column">
+                <div class="scrollable-div d-flex flex-column" #chatContainer>
                   <div class="d-flex flex-column">
                     <div class="card mb-2" *ngFor="let msg of liveChatService.messageHistory"
                          [ngClass]="{'align-self-end': msg.senderId == '1', 'align-self-start': msg.senderId != '1'}">

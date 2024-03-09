@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Message} from "../../common/message";
 import {LiveChatServiceService} from "../../services/live-chat-service.service";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -18,11 +18,16 @@ export class LiveChatComponent implements OnInit {
   customers: Customer[] = [];
 
 
-
+  @ViewChild('chatContainer', { static: false }) private chatContainer!: ElementRef;
   constructor(protected liveChatService: LiveChatServiceService,private authenticationService: AuthenticationService) {
     this.liveChatService.getMessagesHistory(this.chosenCustomerId);
     this.authenticationService.getCurrentUserRolesRequest();
   }
+
+  scrollToBottom(): void {
+    this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+  }
+
 
   sendMessageToCustomer(){
     if(this.message.length > 0){
@@ -32,7 +37,9 @@ export class LiveChatComponent implements OnInit {
         senderId: 1
       });
       this.message = "";
+
     }
+    this.scrollToBottom();
   }
 
 

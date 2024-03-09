@@ -30,7 +30,7 @@ export class LiveChatServiceService {
   }
 
 
-  getCustomers(pageOfUsers: number = 0, numberOfUsers: number = 10){
+  getCustomers(pageOfUsers: number = 0, numberOfUsers: number = 100){
     this.http.get<{ "list" : Customer[] }>(`http://localhost:8080/api/users/allUsers?pageOfUsers=${pageOfUsers}&numberOfUsers=${numberOfUsers}`).subscribe(
       data => {
         console.log(data.list);

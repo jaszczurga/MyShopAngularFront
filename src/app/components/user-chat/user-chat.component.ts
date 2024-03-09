@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LiveChatServiceService} from "../../services/live-chat-service.service";
 import {Customer} from "../../common/customer";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -19,6 +19,12 @@ export class UserChatComponent implements OnInit {
   constructor(protected liveChatService: LiveChatServiceService, private authenticationService: AuthenticationService) {
   }
 
+  @ViewChild('chatContainer', { static: false }) private chatContainer!: ElementRef;
+
+
+  scrollToBottom(): void {
+    this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+  }
   sendMessageToManager(){
     if(this.message.length > 0){
       this.liveChatService.sendMessageToManager({
@@ -28,6 +34,7 @@ export class UserChatComponent implements OnInit {
       });
       this.message = "";
     }
+    this.scrollToBottom();
   }
 
   ngOnInit(): void {
@@ -41,6 +48,7 @@ export class UserChatComponent implements OnInit {
       }
     );
     if(this.authenticationService.decodeJwtToken().roles === 'USER') {
+      this.liveChatService.disconnectWebSocketConnection();
       this.liveChatService.initializeWebSocketConnection();
     }
   }
