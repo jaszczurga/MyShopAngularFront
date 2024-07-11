@@ -25,7 +25,7 @@ export class LiveChatServiceService {
               private http: HttpClient
   ) {
     if(this.authenticationService.decodeJwtToken()==null){
-      this.roles='USER'
+      this.roles=''
     }else{
       this.roles = this.authenticationService.decodeJwtToken().roles ;
     }

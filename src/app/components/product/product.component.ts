@@ -26,11 +26,13 @@ export class ProductComponent implements OnInit{
 
   previousKeyword: string ="";
 
+  roles:string = ''
 
 
     constructor(private productService: ProductService,
                 private route:ActivatedRoute,
-                private imageService: ImageService) {
+                private imageService: ImageService,
+                private authenticationService: AuthenticationService) {
     }
 
 
@@ -41,6 +43,11 @@ export class ProductComponent implements OnInit{
       this.addImagesToProductList();
     });
 
+    if(this.authenticationService.decodeJwtToken()==null){
+      this.roles=''
+    }else{
+      this.roles = this.authenticationService.decodeJwtToken().roles ;
+    }
   }
 
   images: any[] = [];
