@@ -24,7 +24,11 @@ export class LiveChatServiceService {
               private authenticationService: AuthenticationService,
               private http: HttpClient
   ) {
-    this.roles = this.authenticationService.decodeJwtToken().roles;
+    if(this.authenticationService.decodeJwtToken()==null){
+      this.roles='USER'
+    }else{
+      this.roles = this.authenticationService.decodeJwtToken().roles ;
+    }
     //this.initializeWebSocketConnection();
     this.getCustomers();
   }

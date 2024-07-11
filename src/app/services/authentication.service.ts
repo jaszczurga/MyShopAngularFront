@@ -29,6 +29,11 @@ export class AuthenticationService implements OnInit{
 
 
   decodeJwtToken() {
+
+    if(this.getJwtToken()==null){
+      return null;
+    }
+
     const token = this.getJwtToken();
     const decodedToken = this.jwtHelper.decodeToken(token);
     return decodedToken;

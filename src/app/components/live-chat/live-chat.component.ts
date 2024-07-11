@@ -13,7 +13,9 @@ import {Customer} from "../../common/customer";
 export class LiveChatComponent implements OnInit {
 
   message:String = "";
-  chosenCustomerId: number = 2;
+  chosenCustomerId: number = 0;
+  chosenCustomerChatListNumber: number = 0
+
 
   customers: Customer[] = [];
 
@@ -56,7 +58,8 @@ export class LiveChatComponent implements OnInit {
 
 
   selectedUser(id: number | undefined) {
-    this.chosenCustomerId = id || 3;
+    this.chosenCustomerId = id || 0;
+    this.chosenCustomerChatListNumber = this.customers.findIndex((c:Customer) => c.id==id)
     this.liveChatService.getMessagesHistory(this.chosenCustomerId);
     this.liveChatService.disconnectWebSocketConnection();
     this.liveChatService.initializeWebSocketConnection(this.chosenCustomerId);
