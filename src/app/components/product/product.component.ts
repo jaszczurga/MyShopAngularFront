@@ -55,8 +55,8 @@ export class ProductComponent implements OnInit{
     this.imageService.getImagesOfProduct(id).subscribe(
       data => {
         this.images = data;
-        console.log("images=iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-        console.log(this.images);
+        //console.log("images=iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        //console.log(this.images);
       }
     );
   }

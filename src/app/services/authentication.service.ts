@@ -9,7 +9,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService implements OnInit{
+export class AuthenticationService{
 
   //create role list for current user subscribable for components
   CurrentUserRoles: Subject<string | null> = new BehaviorSubject<string | null>(null);
@@ -19,14 +19,10 @@ export class AuthenticationService implements OnInit{
 
   constructor(private httpClient: HttpClient,
               private cookieService: CookieService,
-              private jwtHelper: JwtHelperService) { }
-
-
-  ngOnInit(): void {
+              private jwtHelper: JwtHelperService) {
     this.getCurrentUserRolesRequest();
     this.getCurrentUserId();
   }
-
 
   decodeJwtToken() {
 

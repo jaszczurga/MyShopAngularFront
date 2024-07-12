@@ -72,7 +72,7 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
     }
     this.previousCategoryId=1;
 
-    console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
+    //console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
     this.productService.refreshListOfRecentProducts(0,50,this.currentCategoryId);
     this.productService.ListOfRecentProducts.subscribe(
       data => {
@@ -104,7 +104,7 @@ export class MyProductsMoreInfoAboutCategoryComponent implements OnInit{
       this.thePageNumber=1;
     }
     this.previousCategoryId=1;
-    console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
+    //console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
     //now get the products for the given category id
     this.productService.getProductListPaginate(
       this.thePageNumber-1,

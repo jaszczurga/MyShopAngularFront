@@ -42,13 +42,13 @@ export class ProductContentDetailsComponent implements OnInit{
     this.imageService.getImagesOfProduct(id).subscribe(
       data => {
         this.images = data;
-        console.log("images=iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-        console.log(this.images);
+        //console.log("images=iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        //console.log(this.images);
       }
     );
   }
   addToCart(product: Product) {
-    console.log(`Adding to cart: ${product.productName}, ${this.quantity}`);
+    //console.log(`Adding to cart: ${product.productName}, ${this.quantity}`);
     const theCartItem = new CartItem(product);
     theCartItem.quantity = this.quantity;
 

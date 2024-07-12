@@ -39,7 +39,7 @@ export class MyProductsComponent implements OnInit{
   private listProductCategories() {
     this.productService.getProductCategories().subscribe(
       data => {
-        console.log('Product Categories=' + JSON.stringify(data));
+        //console.log('Product Categories=' + JSON.stringify(data));
         this.productCategories = data.content;
       }
     )
@@ -49,7 +49,7 @@ export class MyProductsComponent implements OnInit{
   deleteCategoryById(id: number) {
     this.productService.deleteCategoryById(id).subscribe(
       data => {
-        console.log('Product Categories=' + JSON.stringify(data));
+       // console.log('Product Categories=' + JSON.stringify(data));
         this.subscribeToCategories();
       }
     )
@@ -61,7 +61,7 @@ export class MyProductsComponent implements OnInit{
   saveCategory(theCategory : CategoryDto) {
     this.productService.saveCategory(theCategory).subscribe(
       data => {
-        console.log('Product Categories=' + JSON.stringify(data));
+        //console.log('Product Categories=' + JSON.stringify(data));
         this.subscribeToCategories();
       }
     )

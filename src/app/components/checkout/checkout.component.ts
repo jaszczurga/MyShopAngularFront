@@ -148,7 +148,7 @@ get AddressStreet() {
 
 
   onSubmit() {
-    console.log("Handling the submit button");
+    //console.log("Handling the submit button");
 
     if(this.checkoutFormGroup.invalid){
       this.checkoutFormGroup.markAllAsTouched();

@@ -30,7 +30,7 @@ export class AddProductDialogComponent implements OnInit{
   ) {}
 
   onNoClick(): void {
-    console.log(this.data);
+    //console.log(this.data);
     this.imageService.selectedFile$.next([]);
     this.dialogRef.close();
   }
@@ -39,7 +39,7 @@ export class AddProductDialogComponent implements OnInit{
   getAllCategories() {
     this.productService.getProductCategories().subscribe(
       data => {
-        console.log('Product Categories=' + JSON.stringify(data));
+        //console.log('Product Categories=' + JSON.stringify(data));
         this.categories = data.content;
       }
     )

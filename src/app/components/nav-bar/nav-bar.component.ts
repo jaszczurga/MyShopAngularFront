@@ -44,7 +44,7 @@ export class NavBarComponent implements OnInit{
   }
 
   doSearch(value: string) {
-    console.log(`value=${value}`);
+    //console.log(`value=${value}`);
     this.router.navigateByUrl(`/search/${value}`);
   }
 }
