@@ -14,11 +14,11 @@
         <input matInput [(ngModel)]="data.ProductDescription">
       </mat-form-field>
     </div>
-    <div class="form-row">
-      <mat-form-field>
+    <div class="form-row" >
+      <mat-form-field data-testid="categorySelector">
         <mat-label>{{data.Category.categoryName}}</mat-label>
-        <mat-select [(ngModel)]="data.Category">
-          <mat-option *ngFor="let category of categories" [value]="category" >{{ category.categoryName }}</mat-option>
+        <mat-select [(ngModel)]="data.Category" >
+          <mat-option *ngFor="let category of categories" [value]="category" data-testid="categoryOption">{{ category.categoryName }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

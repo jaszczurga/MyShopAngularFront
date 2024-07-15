@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <!-- User list -->
-    <div class="col-md-4">
+    <div class="col-md-4" data-testid="usersPanel">
       <h3>Users</h3>
       <ul class="list-group">
         <li class="list-group-item hover-effect" *ngFor="let customer of customers" (click)="selectedUser(customer.id)"
@@ -11,7 +11,7 @@
       </ul>
     </div>
     <!-- Chat interface -->
-    <div class="col-md-8">
+    <div class="col-md-8" data-testid="chatPanel">
       <div class="card">
         <div class="card-header">
           Chat with {{customers[chosenCustomerChatListNumber].email}}
